@@ -1,1 +1,25 @@
-<p>read-users works!</p>
+<h2>User List</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of users">
+        <td>{{ item._id }}</td>
+        <td>{{ item.name }}</td>
+        <td *ngIf="item.image"><img [src]="item.image" alt="{{ item.name }}" width="100" height="100"></td> <!-- Updated line -->
+        <td>{{ item.password }}</td>
+        <td>
+        <button (click)="edit(item._id)" class="btn btn-warning btn-sm me-2">Edit</button>
+        <button (click)="delete(item._id)" class="btn btn-danger btn-sm">Delete</button>
+
+        </td>
+    </tr>
+    </tbody>
+
+</table>

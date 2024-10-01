@@ -21,5 +21,7 @@ router.post("/multiple", controller.createNewItems);
 router.get("/:id", controller.getById);
 router.delete("/:id", controller.deleteById);
 router.patch("/:id", controller.updateById);
+router.post("/login", controller.login);
+router.post("/logout", controller.logout);
 
 module.exports = router;

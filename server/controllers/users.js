@@ -140,3 +140,35 @@ exports.updateById = async (req, res) => {
         res.status(404).json({ error: "Failed to update item" });
     }
 };
+
+// Login using attemptLogin
+exports.login = async (req, res) => {
+    const { username, password } = req.body;
+    console.log("Login: ", username, password);
+    try {
+        const token = await model.attemptLogin(username, password);
+        if (token) {
+            res.status(200).json({ token }); // Returns a jwt token if the login is successful
+        } else {
+            res.status(401).json({ error: "Invalid username or password" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Failed to login" });
+    }
+};
+
+// Logout using logout
+exports.logout = async (req, res) => {
+    const token = req.headers.authorization;
+    try {
+        const result = await model.logout(token);
+        if (result.deletedCount === 1) {
+            res.status(200).json({ message: "Logout successful" });
+        } else {
+            res.status(404).json({ error: "Token not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Failed to logout" });
+    }
+};
+

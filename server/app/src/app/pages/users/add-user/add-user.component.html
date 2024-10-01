@@ -1,1 +1,39 @@
-<p>add-user works!</p>
+<h2>Add New User</h2>
+
+<form (ngSubmit)="add()" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" id="name" [(ngModel)]="user.name" name="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="text" id="email" [(ngModel)]="user.email" name="email" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="role" class="form-label">Role:</label>
+        <select id="role" [(ngModel)]="user.role" name="role" class="form-control" required>
+            <option value="User">User</option>
+            <option value="SuperAdmin">SuperAdmin</option>
+            <option value="GroupAdmin">GroupAdmin</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="text" id="password" [(ngModel)]="user.password" name="password" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Image:</label>
+        <input type="file" id="image" (change)="onFileChange($event)" class="form-control" required>
+    </div>
+
+    <!-- Error message display -->
+    <div *ngIf="errorText" class="alert alert-danger">
+        {{ errorText }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Add User</button>
+</form>

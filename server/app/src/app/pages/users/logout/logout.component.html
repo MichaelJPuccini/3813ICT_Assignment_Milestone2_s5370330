@@ -1,1 +1,7 @@
-<p>logout works!</p>
+<div class="logout-container">
+    <p>Logging out...</p>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  </div>
+  
