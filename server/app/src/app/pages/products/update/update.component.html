@@ -1,0 +1,28 @@
+<nav>
+    <a [routerLink]="['/products']" class="btn btn-primary me-2">Products</a>
+    <a [routerLink]="['/products/add']" class="btn btn-primary me-2">Add</a>
+</nav>
+<h2>Update Product</h2>
+<form (ngSubmit)="updateProduct()" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" id="name" [(ngModel)]="product.name" name="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" [(ngModel)]="product.description" name="description" class="form-control" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="price" class="form-label">Price:</label>
+        <input type="number" id="price" [(ngModel)]="product.price" name="price" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="units" class="form-label">Units:</label>
+        <input type="number" id="units" [(ngModel)]="product.units" name="units" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update Product</button>
+</form>

@@ -1,0 +1,30 @@
+<nav>
+    <a [routerLink]="['/products']" class="btn btn-primary me-2">Products</a>
+    <a [routerLink]="['/products/add']" class="btn btn-primary me-2">Add</a>
+</nav>
+
+<h2>Confirm Delete</h2>
+<form (ngSubmit)="deleteProduct()">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" id="name" [(ngModel)]="product.name" name="name" class="form-control" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <input type="text" id="description" [(ngModel)]="product.description" name="description" class="form-control" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label for="price" class="form-label">Price:</label>
+        <input type="text" id="price" [(ngModel)]="product.price" name="price" class="form-control" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label for="units" class="form-label">Units:</label>
+        <input type="text" id="units" [(ngModel)]="product.units" name="units" class="form-control" readonly>
+    </div>
+
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+</form>
+
