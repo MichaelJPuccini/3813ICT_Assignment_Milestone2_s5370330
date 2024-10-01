@@ -42,8 +42,6 @@ app.get('*', (req, res) => {
 
 // start the Express server
 app.listen(PORT, () => {
-  // console.log(`Server is running on port: ${PORT}`);
-  // const serverAddress = `http://localhost:${PORT}`;
   const serverAddress = `http://${HOST}:${PORT}`;
   console.log(`Server is running on port: ${PORT}`);
   console.log(`Server address: ${serverAddress}`);
