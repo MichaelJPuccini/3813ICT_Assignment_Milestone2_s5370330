@@ -29,6 +29,9 @@ const products = require("./routes/products");
 // Using the routes
 app.use("/api/posts", posts);
 app.use("/api/products", products);
+app.use("/api/users", require("./routes/users"));
+app.use("/api/groups", require("./routes/groups"));
+app.use("/api/channels", require("./routes/channels"));
 
 // Catch-all route to serve the Angular app for any other routes
 app.get('*', (req, res) => {
