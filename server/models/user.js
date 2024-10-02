@@ -6,7 +6,7 @@ const AUTH_TABLE_NAME = 'auth';
 const SECRET_KEY = 'your_secret_key'; // Replace with your actual secret key
 
 const jwt = require('jsonwebtoken');
-const tokenExpireTime = '12h';
+// const tokenExpireTime = '12h';
 
 const { connectToDatabase } = require("../db/conn");
 const { ObjectId } = require("mongodb");
@@ -71,7 +71,34 @@ exports.updateById = async function updateById(id, updateData) {
 };
 
 // Attempt Login
+// exports.attemptLogin = async function attemptLogin(name, password) {
+//     const db = await connectToDatabase();
+//     const collection = db.collection(TABLE_NAME);
+
+//     // Find the user with the matching username and password
+//     const user = await collection.findOne({ name, password });
+
+//     console.log("User: ", user);
+
+//     if (user) {
+//         // Generate an auth token
+//         const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: tokenExpireTime });
+
+//         // Store the token in the auth table
+//         const authCollection = db.collection(AUTH_TABLE_NAME);
+//         await authCollection.insertOne({ userId: user._id, token, createdAt: new Date() });
+
+//         // Return the token
+//         return token;
+//     } else {
+//         // Return null or an appropriate response if the login fails
+//         return null;
+//     }
+// };
+
+// Attempt Login
 exports.attemptLogin = async function attemptLogin(name, password) {
+    console.log("Attempting to login: ", name, password);
     const db = await connectToDatabase();
     const collection = db.collection(TABLE_NAME);
 
@@ -81,20 +108,14 @@ exports.attemptLogin = async function attemptLogin(name, password) {
     console.log("User: ", user);
 
     if (user) {
-        // Generate an auth token
-        const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: tokenExpireTime });
-
-        // Store the token in the auth table
-        const authCollection = db.collection(AUTH_TABLE_NAME);
-        await authCollection.insertOne({ userId: user._id, token, createdAt: new Date() });
-
-        // Return the token
-        return token;
+        console.log("User found: ", user);
+        return user;
     } else {
         // Return null or an appropriate response if the login fails
         return null;
     }
 };
+
 
 // Logout
 exports.logout = async function logout(token) {
@@ -105,4 +126,32 @@ exports.logout = async function logout(token) {
 
     // Delete the token from the auth table
     return collection.deleteOne({ token });
+};
+
+// AuthToId function
+exports.authToId = async function authToId(token) {
+    console.log("AuthToId in Model: ", token);
+    try {
+        // Verify the token
+        const decoded = jwt.verify(token, SECRET_KEY);
+
+        // Connect to the database
+        const db = await connectToDatabase();
+        const authCollection = db.collection(AUTH_TABLE_NAME);
+
+        // Check if the token exists in the auth table
+        const authRecord = await authCollection.findOne({ token });
+
+        if (authRecord) {
+            // Return the user ID
+            return decoded.userId;
+        } else {
+            // Token not found in the auth table
+            throw new Error('Invalid token');
+        }
+    } catch (error) {
+        // Handle token verification errors or other errors
+        console.error('Error in authToId:', error);
+        throw new Error('Authentication failed');
+    }
 };

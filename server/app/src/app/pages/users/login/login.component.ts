@@ -23,7 +23,10 @@ export class LoginComponent {
     this.userService.login(this.username, this.password)
       .subscribe({
         next: (response) => {
-          localStorage.setItem('authToken', response.token);
+          // Store user Details
+          // localStorage.setItem('authToken', response.token);
+          // localStorage.setItem('userId', this.userService.currentUser.userId);
+          // localStorage.setItem('username', this.userService.currentUser.username);
           this.router.navigate(['/users']); // Navigate to a different page on successful login
         },
         error: (error) => {

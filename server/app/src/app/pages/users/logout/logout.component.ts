@@ -22,17 +22,11 @@ export class LogoutComponent {
   }
 
   logout(): void {
-    this.userService.logout().subscribe({
-      next: () => {
-        localStorage.removeItem('authToken'); // Clear the token from local storage
-        this.router.navigate(['/login']); // Navigate to the login page or another appropriate page
-      },
-      error: (error) => {
-        console.error('Logout failed', error);
-        // Optionally handle the error, e.g., show a message to the user
-        this.errorMessage = 'Logout failed. Please try again.'; // Set the error message
-      }
-    });
+    localStorage.removeItem('userId'); // Clear the user ID from local storage
+    localStorage.removeItem('username'); // Clear the username from local storage
+    localStorage.removeItem('userrole'); // Clear the username from local storage
+
+    this.router.navigate(['/login']); // Navigate to the login page or another appropriate page
   }
 
 }

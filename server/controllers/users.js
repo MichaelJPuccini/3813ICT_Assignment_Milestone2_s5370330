@@ -141,14 +141,30 @@ exports.updateById = async (req, res) => {
     }
 };
 
+// // Login using attemptLogin
+// exports.login = async (req, res) => {
+//     const { username, password } = req.body;
+//     console.log("Login: ", username, password);
+//     try {
+//         const token = await model.attemptLogin(username, password);
+//         if (token) {
+//             res.status(200).json({ token }); // Returns a jwt token if the login is successful
+//         } else {
+//             res.status(401).json({ error: "Invalid username or password" });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to login" });
+//     }
+// };
+
 // Login using attemptLogin
 exports.login = async (req, res) => {
     const { username, password } = req.body;
     console.log("Login: ", username, password);
     try {
-        const token = await model.attemptLogin(username, password);
-        if (token) {
-            res.status(200).json({ token }); // Returns a jwt token if the login is successful
+        const user = await model.attemptLogin(username, password);
+        if (user) {
+            res.status(200).json({ user }); // Returns the user object if the login is successful
         } else {
             res.status(401).json({ error: "Invalid username or password" });
         }
@@ -172,3 +188,19 @@ exports.logout = async (req, res) => {
     }
 };
 
+// Convert an auth token to an ID
+exports.authToId = async (req, res) => {
+    console.log("AuthToId in Controller");
+
+    const token = req.headers.authorization;
+    try {
+        const id = await model.authToId(token);
+        if (id) {
+            res.status(200).json({ id });
+        } else {
+            res.status(404).json({ error: "Token not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Failed to convert token to ID" });
+    }
+};
