@@ -1,0 +1,15 @@
+<div class="groups-container">
+    <h2>Groups</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+    <ul *ngIf="groups.length > 0; else noGroups">
+        <li *ngFor="let group of groups">
+            <!-- {{ group.name }} -->
+            <a [routerLink]="['/groups', group._id]">{{ group.name }}</a>
+        </li>
+    </ul>
+    <ng-template #noGroups>
+        <p>No groups available.</p>
+    </ng-template>
+</div>

@@ -1,0 +1,14 @@
+<div class="channel-list-container">
+    <h2>Channels</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+    <ul *ngIf="channels.length > 0; else noChannels">
+        <li *ngFor="let channel of channels">
+            <a [routerLink]="['/channels', channel._id]">{{ channel.name }}</a>
+        </li>
+    </ul>
+    <ng-template #noChannels>
+        <p>No channels available.</p>
+    </ng-template>
+</div>

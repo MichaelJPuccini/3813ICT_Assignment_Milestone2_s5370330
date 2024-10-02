@@ -55,7 +55,7 @@ exports.getLatest = async (req, res) => {
 exports.createNewItem = async (req, res) => {
     const item = req.body;
     // if there is no data in the request body, return an error
-    // console.log("New Item: ", item);
+    console.log("New Channel: ", item);
     // if item is an empty object, return an error
     if (!item || Object.keys(item).length === 0) {
         // console.log("No data in the request body");

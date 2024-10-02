@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReadGroupssComponent } from './read-groupss.component';
+import { ReadChannelComponent } from './read-channel.component';
 
-describe('ReadGroupssComponent', () => {
-  let component: ReadGroupssComponent;
-  let fixture: ComponentFixture<ReadGroupssComponent>;
+describe('ReadChannelComponent', () => {
+  let component: ReadChannelComponent;
+  let fixture: ComponentFixture<ReadChannelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReadGroupssComponent]
+      imports: [ReadChannelComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReadGroupssComponent);
+    fixture = TestBed.createComponent(ReadChannelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

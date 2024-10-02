@@ -1,1 +1,15 @@
-<p>read-group works!</p>
+<div class="group-container">
+    <h2>Group Details</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+    <div *ngIf="group">
+        <p><strong>ID:</strong> {{ group?._id }}</p>
+        <p><strong>Name:</strong> {{ group?.name }}</p>
+        <!-- Add more fields as needed -->
+    </div>
+
+    <app-display-channels-list [groupId]="groupId"></app-display-channels-list>
+
+    <a [routerLink]="['/channels/add', group?._id]">Add Channel</a>
+</div>

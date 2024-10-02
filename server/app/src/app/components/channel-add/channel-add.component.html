@@ -1,0 +1,13 @@
+<div class="add-channel-container">
+    <h2>Add Channel</h2>
+    <form (ngSubmit)="add()">
+      <div class="mb-3">
+        <label for="channelName" class="form-label">Channel Name</label>
+        <input type="text" id="channelName" [(ngModel)]="channelName" name="channelName" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Channel</button>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </form>
+</div>

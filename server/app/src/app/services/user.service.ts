@@ -70,8 +70,4 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/logout`, {}, { headers });
   }
 
-  // getAuthKey(userLogin: Omit<UserLogin, '_id'>): Observable<UserAuthKey> {
-  //   return this.http.post<UserAuthKey>(`${this.apiUrl}/login`, userLogin);
-  // }
-
 }
