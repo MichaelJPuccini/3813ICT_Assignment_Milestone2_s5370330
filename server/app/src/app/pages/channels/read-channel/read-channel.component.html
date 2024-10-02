@@ -1,1 +1,15 @@
-<p>read-channel works!</p>
+<div *ngIf="channel; else loading">
+    <h2>Channel Name: {{ channel.name }}</h2>
+    <p>Channel ID: {{ channel._id }}</p>
+</div>
+
+<ng-template #loading>
+    <p>Loading channel data...</p>
+</ng-template>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+</div>
+
+<p> This is where the chat program goes for each channel. </p>
+

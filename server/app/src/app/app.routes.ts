@@ -20,7 +20,6 @@ import { ReadGroupComponent } from './pages/groups/read-group/read-group.compone
 import { AddChannelComponent } from './pages/channels/add-channel/add-channel.component';
 import { RemoveChannelComponent } from './pages/channels/remove-channel/remove-channel.component';
 import { UpdateChannelComponent } from './pages/channels/update-channel/update-channel.component';
-import { ReadChannelsComponent } from './pages/channels/read-channels/read-channels.component';
 import { ReadChannelComponent } from './pages/channels/read-channel/read-channel.component';
 
 export const routes: Routes = [
@@ -40,7 +39,6 @@ export const routes: Routes = [
     {path: 'channels/add/:groupId', component: AddChannelComponent}, // groupId is the group that the channel is being added to
     {path: 'channels/update/:id', component: UpdateChannelComponent},
     {path: 'channels/remove/:id', component: RemoveChannelComponent},
-    {path: 'channels', component: ReadChannelsComponent},
     {path: 'channels/:id', component: ReadChannelComponent},
 
     {path: 'products/add', component: AddComponent},
