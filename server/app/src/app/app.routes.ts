@@ -23,6 +23,7 @@ import { UpdateChannelComponent } from './pages/channels/update-channel/update-c
 import { ReadChannelComponent } from './pages/channels/read-channel/read-channel.component';
 
 export const routes: Routes = [
+    {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
     {path: 'logout', component: LogoutComponent},
     {path: 'users/add', component: AddUserComponent},
@@ -45,5 +46,4 @@ export const routes: Routes = [
     {path: 'products/remove/:id', component: RemoveComponent},
     {path: 'products/update/:id', component: UpdateComponent},
     {path: 'products', component: ReadComponent},
-    {path: '', component: ReadComponent},
 ];

@@ -21,5 +21,6 @@ router.delete("/:id", controller.deleteById);
 router.get("/filter", controller.getAllByFilter);
 router.get("/latest/:x", controller.getLatest);
 router.post("/multiple", controller.createNewItems);
+router.get("/mine/:userId", controller.getMyGroups);    // Gets the groups that the user is a member of
 
 module.exports = router;

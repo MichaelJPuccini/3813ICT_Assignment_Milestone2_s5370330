@@ -19,7 +19,13 @@ export class DisplayGroupsComponent implements OnInit {
   constructor(private groupService: GroupService) {}
 
   ngOnInit(): void {
-    this.groupService.getAll().subscribe({
+    const id = localStorage.getItem('userId');
+    if (!id) {
+      this.errorMessage = 'Please login.';
+      return;
+    }
+    console.log("Fetching groups for user:", id);
+    this.groupService.getAll(id).subscribe({
       next: (data) => {
         this.groups = data;
         // console.log('Groups:', this.groups);

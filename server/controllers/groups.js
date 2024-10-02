@@ -8,6 +8,10 @@ const MODEL_FILENAME = path.join(__dirname, "../models", modelName);
 const model = require(MODEL_FILENAME);
 // const model = require("../models/product"); // Use this line instead if you want to manually set the name of the model file
 
+// Load the user model
+const userModel = require('../models/user'); // Adjust the path as necessary
+
+
 // Get all items
 exports.getAll = async (req, res) => {
     try {
@@ -138,5 +142,35 @@ exports.updateById = async (req, res) => {
         }
     } catch (error) {
         res.status(404).json({ error: "Failed to update item" });
+    }
+};
+
+// Return all groups that the user is a member of
+// If the user is a SuperUser, return all groups
+exports.getMyGroups = async (req, res) => {
+    const userId = req.params.userId;
+    // console.log("Getting my groups. User ID: ", userId);
+    try {
+        // Load the user
+        const user = await userModel.getById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Check if the user is a SuperUser
+        if (user.role === 'SuperUser') {
+            // Return all groups if the user is a SuperUser
+            const allGroups = await model.getAll();
+            return res.status(200).json(allGroups);
+        } else {
+            // Filter groups where the user's userId is in the userIds array
+            const allGroups = await model.getAll();
+            const userGroups = allGroups.filter(group => group.userIds.includes(userId));
+            return res.status(200).json(userGroups);
+        }
+    } catch (error) {
+        console.error("Error fetching groups:", error);
+        return res.status(500).json({ error: "Failed to fetch groups" });
     }
 };
