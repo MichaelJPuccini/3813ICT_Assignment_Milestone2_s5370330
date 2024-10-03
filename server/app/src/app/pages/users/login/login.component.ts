@@ -27,7 +27,7 @@ export class LoginComponent {
           // localStorage.setItem('authToken', response.token);
           // localStorage.setItem('userId', this.userService.currentUser.userId);
           // localStorage.setItem('username', this.userService.currentUser.username);
-          this.router.navigate(['/users']); // Navigate to a different page on successful login
+          this.router.navigate(['/groups']); // Navigate to a different page on successful login
         },
         error: (error) => {
           this.errorMessage = 'Invalid username or password';

@@ -16,11 +16,13 @@ import { RemoveGroupComponent } from './pages/groups/remove-group/remove-group.c
 import { UpdateGroupComponent } from './pages/groups/update-group/update-group.component';
 import { ReadGroupsComponent } from './pages/groups/read-groups/read-groups.component';
 import { ReadGroupComponent } from './pages/groups/read-group/read-group.component';
+import { ManageUsersComponent } from './pages/groups/manage-users/manage-users.component';
 
 import { AddChannelComponent } from './pages/channels/add-channel/add-channel.component';
 import { RemoveChannelComponent } from './pages/channels/remove-channel/remove-channel.component';
 import { UpdateChannelComponent } from './pages/channels/update-channel/update-channel.component';
 import { ReadChannelComponent } from './pages/channels/read-channel/read-channel.component';
+import { ManageChannelUsersComponent } from './pages/channels/manage-channel-users/manage-channel-users.component';
 
 export const routes: Routes = [
     {path: '', component: LoginComponent},
@@ -36,11 +38,13 @@ export const routes: Routes = [
     {path: 'groups/remove/:id', component: RemoveGroupComponent},
     {path: 'groups', component: ReadGroupsComponent},
     {path: 'groups/:id', component: ReadGroupComponent},
+    {path: 'groups/manageusers/:id', component: ManageUsersComponent},
 
     {path: 'channels/add/:groupId', component: AddChannelComponent}, // groupId is the group that the channel is being added to
     {path: 'channels/update/:id', component: UpdateChannelComponent},
     {path: 'channels/remove/:id', component: RemoveChannelComponent},
     {path: 'channels/:id', component: ReadChannelComponent},
+    {path: 'channels/manageusers/:id', component: ManageChannelUsersComponent},
 
     {path: 'products/add', component: AddComponent},
     {path: 'products/remove/:id', component: RemoveComponent},

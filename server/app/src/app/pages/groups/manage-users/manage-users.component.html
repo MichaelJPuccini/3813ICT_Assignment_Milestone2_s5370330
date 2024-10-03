@@ -1,0 +1,66 @@
+<div class="group-container">
+    <h2>Manage Group Users for {{ group?.name }}</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+    <!-- <div *ngIf="group">
+        <p><strong>ID:</strong> {{ group?._id }}</p>
+        <p><strong>Name:</strong> {{ group?.name }}</p>
+    </div> -->
+
+    <div *ngIf="users.length > 0; else noUsers">
+        <h3>Users - Click to remove</h3>
+        <ul>
+            <li *ngFor="let user of users">
+                <button (click)="removeUser(group._id, user.id)">Remove</button>
+                {{ user.name }}
+            </li>
+        </ul>
+    </div>
+    <ng-template #noUsers>
+        <p>No users.</p>
+    </ng-template>
+    
+    <!-- Non-Group Users List -->
+    <div *ngIf="nonUsers.length > 0; else noNonUsers">
+        <h3>Click to add Users</h3>
+        <ul>
+            <li *ngFor="let nonUser of nonUsers">
+                <button (click)="addUser(group._id, nonUser.id)">Add</button>
+                {{ nonUser.name }}
+            </li>
+        </ul>
+    </div>
+    <ng-template #noNonUsers>
+        <p>No users available to add.</p>
+    </ng-template>
+    
+    <!-- Group Admins List -->
+    <div *ngIf="admins.length > 0; else noAdmins">
+        <h3>Admins - Click to remove</h3>
+        <ul>
+            <li *ngFor="let admin of admins">
+                <button (click)="removeAdmin(group._id, admin.id)">Remove</button>
+                {{ admin.name }}
+            </li>
+        </ul>
+    </div>
+    <ng-template #noAdmins>
+        <h3>Admins</h3>
+        <p>No admins.</p>
+    </ng-template>
+    
+    <!-- Non-Group Admins List -->
+    <div *ngIf="nonAdmins.length > 0; else noNonAdmins">
+        <h3>Click to add Admins</h3>
+        <ul>
+            <li *ngFor="let nonAdmin of nonAdmins">
+                <button (click)="addAdmin(group._id, nonAdmin.id)">Add</button>
+                {{ nonAdmin.name }}
+            </li>
+        </ul>
+    </div>
+    <ng-template #noNonAdmins>
+        <p>No admins available to add.</p>
+    </ng-template>
+    </div>

@@ -19,10 +19,16 @@ export class DisplayChannelsListComponent {
   constructor(private channelService: ChannelService) {}
 
   ngOnInit(): void {
-    console.log("Group ID: ", this.groupId);
-    this.channelService.getByGroupId(this.groupId).subscribe({
+    const userId = localStorage.getItem('userId');
+    console.log("Group ID: ", this.groupId + " User ID: ", userId);
+    if (!userId) {
+      this.errorMessage = 'Please login.';
+      return;
+    }
+    // this.channelService.getByGroupId(this.groupId).subscribe({
     // this.channelService.getAll().subscribe({
-        next: (channels) => {
+    this.channelService.getMyChannels(this.groupId, userId).subscribe({
+      next: (channels) => {
         console.log("Channels returned: ", channels);
         this.channels = channels;
       },

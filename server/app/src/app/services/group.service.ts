@@ -46,4 +46,23 @@ export class GroupService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
+  // Add user to group
+  addUser(groupId: string, userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/adduser/${groupId}/${userId}`);
+  }
+
+  // Remove user from group
+  removeUser(groupId: string, userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/removeuser/${groupId}/${userId}`);
+  }
+
+  // Add admin to group
+  addAdmin(groupId: string, userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/addadmin/${groupId}/${userId}`);
+  }
+
+  // Remove admin from group
+  removeAdmin(groupId: string, userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/removeadmin/${groupId}/${userId}`);
+  }
 }

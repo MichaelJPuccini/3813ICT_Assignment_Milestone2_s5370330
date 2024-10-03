@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { GroupService } from '../../../services/group.service';
 
@@ -8,7 +9,7 @@ import { GroupService } from '../../../services/group.service';
 @Component({
   selector: 'app-add-group',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './add-group.component.html',
   styleUrl: './add-group.component.css'
 })
