@@ -174,3 +174,135 @@ exports.getMyGroups = async (req, res) => {
         return res.status(500).json({ error: "Failed to fetch groups" });
     }
 };
+
+// Add a user to a group
+exports.addUserToGroup = async (req, res) => {
+    console.log("Adding user to group");
+    const userId = req.params.userId;
+    const groupId = req.params.groupId;
+    // const { groupId, userId } = req.body;
+    console.log("Adding user to group. Group ID: ", groupId, " User ID: ", userId);
+
+    try {
+        // Load the group
+        const group = await model.getById(groupId);
+
+        if (!group) {
+            return res.status(404).json({ error: "Group not found" });
+        }
+
+        // Check if the user is already in the group
+        if (!group.userIds.includes(userId)) {
+            // Add the user to the group
+            group.userIds.push(userId);
+
+            // Update the group
+            await model.updateById(groupId, group);
+
+            return res.status(200).json({ message: "User added to group successfully" });
+        } else {
+            return res.status(400).json({ error: "User is already in the group" });
+        }
+    } catch (error) {
+        console.error("Error adding user to group:", error);
+        return res.status(500).json({ error: "Failed to add user to group" });
+    }
+};
+
+// Remove a user from a group
+exports.removeUserFromGroup = async (req, res) => {
+    const userId = req.params.userId;
+    const groupId = req.params.groupId;
+    // const { groupId, userId } = req.body;
+
+    try {
+        // Load the group
+        const group = await model.getById(groupId);
+
+        if (!group) {
+            return res.status(404).json({ error: "Group not found" });
+        }
+
+        // Check if the user is in the group
+        if (group.userIds.includes(userId)) {
+            // Remove the user from the group
+            group.userIds = group.userIds.filter(id => id !== userId);
+
+            // Update the group
+            await model.updateById(groupId, group);
+
+            return res.status(200).json({ message: "User removed from group successfully" });
+        } else {
+            return res.status(400).json({ error: "User is not in the group" });
+        }
+    } catch (error) {
+        console.error("Error removing user from group:", error);
+        return res.status(500).json({ error: "Failed to remove user from group" });
+    }
+};
+
+// Add an admin to a group
+exports.addAdminToGroup = async (req, res) => {
+    const userId = req.params.userId;
+    const groupId = req.params.groupId;
+    // const { groupId, userId } = req.body;
+
+    try {
+        // Load the group
+        const group = await model.getById(groupId);
+
+        if (!group) {
+            return res.status(404).json({ error: "Group not found" });
+        }
+
+        // Check if the user is already an admin
+        if (!group.adminIds.includes(userId)) {
+            // Add the user to the group
+            group.adminIds.push(userId);
+
+            // Update the group
+            await model.updateById(groupId, group);
+
+            return res.status(200).json({ message: "Admin added to group successfully" });
+        } else {
+            return res.status(400).json({ error: "User is already an admin" });
+        }
+    } catch (error) {
+        console.error("Error adding admin to group:", error);
+        return res.status(500).json({ error: "Failed to add admin to group" });
+    }
+};
+
+// Remove an admin from a group
+exports.removeAdminFromGroup = async (req, res) => {
+    const userId = req.params.userId;
+    const groupId = req.params.groupId;
+    // const { groupId, userId } = req.body;
+
+    try {
+        // Load the group
+        const group = await model.getById(groupId);
+
+        if (!group) {
+            return res.status(404).json({ error: "Group not found" });
+        }
+
+        // Check if the user is an admin
+        if (group.adminIds.includes(userId)) {
+            // Remove the user from the group
+            group.adminIds = group.adminIds.filter(id => id !== userId);
+
+            // Update the group
+            await model.updateById(groupId, group);
+
+            return res.status(200).json({ message: "Admin removed from group successfully" });
+        } else {
+            return res.status(400).json({ error: "User is not an admin" });
+        }
+    } catch (error) {
+        console.error("Error removing admin from group:", error);
+        return res.status(500).json({ error: "Failed to remove admin from group" });
+    }
+};
+
+

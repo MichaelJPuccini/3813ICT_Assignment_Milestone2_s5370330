@@ -8,6 +8,9 @@ const MODEL_FILENAME = path.join(__dirname, "../models", modelName);
 const model = require(MODEL_FILENAME);
 // const model = require("../models/product"); // Use this line instead if you want to manually set the name of the model file
 
+// Load the user model
+const userModel = require('../models/user'); // Adjust the path as necessary
+
 // Get all items
 exports.getAll = async (req, res) => {
     try {
@@ -138,5 +141,168 @@ exports.updateById = async (req, res) => {
         }
     } catch (error) {
         res.status(404).json({ error: "Failed to update item" });
+    }
+};
+
+// Returns all channels in the group that the user is a member of
+// If the user is a SuperUser, returns all channels
+
+exports.getMyChannels = async (req, res) => {
+    const { userId, groupId } = req.params;
+    console.log("Getting My Channels: User ID: ", userId, " Group ID: ", groupId);
+    try {
+        // Load the user
+        const user = await userModel.getById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Check if the user is a SuperUser
+        if (user.role === 'SuperUser') {
+            // Return all channels in the group if the user is a SuperUser
+            const allChannels = await model.getAll();
+            const allGroupChannels = allChannels.filter(channel => channel.groupId === groupId);
+            return res.status(200).json(allGroupChannels);
+        } else {
+            // Filter channels where the user's userId is in the userIds array and groupId matches
+            const allChannels = await model.getAll();
+            const allGroupChannels = allChannels.filter(channel => channel.groupId === groupId);
+            const userChannels = allGroupChannels.filter(channel => channel.userIds.includes(userId));
+            return res.status(200).json(userChannels);
+        }
+    } catch (error) {
+        console.error("Error fetching channels:", error);
+        return res.status(500).json({ error: "Failed to fetch channels" });
+    }
+};
+
+// Add a user to a group
+exports.addUser = async (req, res) => {
+    console.log("Adding user to channel");
+    const userId = req.params.userId;
+    const channelId = req.params.channelId;
+    // const { groupId, userId } = req.body;
+    console.log("Adding user to channel. channelId: ", channelId, " User ID: ", userId);
+
+    try {
+        // Load the group
+        const channel = await model.getById(channelId);
+
+        if (!channel) {
+            return res.status(404).json({ error: "Group not found" });
+        }
+
+        // Check if the user is already in the group
+        if (!channel.userIds.includes(userId)) {
+            // Add the user to the channel
+            channel.userIds.push(userId);
+
+            // Update the channel
+            await model.updateById(channelId, channel);
+
+            return res.status(200).json({ message: "User added to channel successfully" });
+        } else {
+            return res.status(400).json({ error: "User is already in the channel" });
+        }
+    } catch (error) {
+        console.error("Error adding user to channel:", error);
+        return res.status(500).json({ error: "Failed to add user to channel" });
+    }
+};
+
+// Remove a user from a group
+exports.removeUser = async (req, res) => {
+    const userId = req.params.userId;
+    const channelId = req.params.channelId;
+    // const { groupId, userId } = req.body;
+
+    try {
+        // Load the group
+        const channel = await model.getById(channelId);
+
+        if (!channel) {
+            return res.status(404).json({ error: "Channel not found" });
+        }
+
+        // Check if the user is in the group
+        if (channel.userIds.includes(userId)) {
+            // Remove the user from the channel
+            channel.userIds = channel.userIds.filter(id => id !== userId);
+
+            // Update the channel
+            await model.updateById(channelId, channel);
+
+            return res.status(200).json({ message: "User removed from channel successfully" });
+        } else {
+            return res.status(400).json({ error: "User is not in the channel" });
+        }
+    } catch (error) {
+        console.error("Error removing user from channel:", error);
+        return res.status(500).json({ error: "Failed to remove user from channel" });
+    }
+};
+
+// Add an admin to a group
+exports.addAdmin = async (req, res) => {
+    const userId = req.params.userId;
+    const channelId = req.params.channelId;
+    // const { groupId, userId } = req.body;
+
+    try {
+        // Load the group
+        const channel = await model.getById(channelId);
+
+        if (!channel) {
+            return res.status(404).json({ error: "Channel not found" });
+        }
+
+        // Check if the user is already an admin
+        if (!channel.adminIds.includes(userId)) {
+            // Add the user to the channel
+            channel.adminIds.push(userId);
+
+            // Update the channel
+            await model.updateById(channelId, channel);
+
+            return res.status(200).json({ message: "Admin added to channel successfully" });
+        } else {
+            return res.status(400).json({ error: "User is already an admin" });
+        }
+    } catch (error) {
+        console.error("Error adding admin to channel:", error);
+        return res.status(500).json({ error: "Failed to add admin to channel." });
+    }
+};
+
+// Remove an admin from a group
+exports.removeAdmin = async (req, res) => {
+    const userId = req.params.userId;
+    const channelId = req.params.channelId;
+    // const { groupId, userId } = req.body;
+
+    try {
+        // Load the group
+        const channel = await model.getById(channelId);
+
+        if (!channel) {
+            return res.status(404).json({ error: "Channel not found" });
+        }
+
+        // Check if the user is an admin
+        if (channel.adminIds.includes(userId)) {
+            // Remove the user from the channel
+            channel.adminIds = channel.adminIds.filter(id => id !== userId);
+
+            // Update the channel
+            await model.updateById(channelId, channel);
+
+            return res.status(200).json({ message: "Admin removed from channel successfully" });
+        } else {
+            return res.status(400).json({ error: "User is not an admin" });
+        }
+    } catch (error) {
+        console.error("Error removing admin from channel:", error);
+        return res.status(500).json({ error: "Failed to remove admin from channel" });
     }
 };
