@@ -5,10 +5,12 @@ import { CommonModule } from '@angular/common';
 
 import { UserService } from '../../../services/user.service';
 
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
+
 @Component({
   selector: 'app-logout',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TopMenuComponent],
   templateUrl: './logout.component.html',
   styleUrl: './logout.component.css'
 })

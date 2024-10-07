@@ -7,11 +7,12 @@ import { GroupService } from '../../../services/group.service';
 import { UserService } from '../../../services/user.service';
 import { ChannelService } from '../../../services/channel.service';
 
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
 @Component({
   selector: 'app-manage-users',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TopMenuComponent],
   templateUrl: './manage-users.component.html',
   styleUrl: './manage-users.component.css'
 })

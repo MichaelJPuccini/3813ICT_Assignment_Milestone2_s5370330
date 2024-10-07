@@ -6,10 +6,12 @@ import { RouterModule } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
 
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
+
 @Component({
   selector: 'app-add-user',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, TopMenuComponent],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.css'
 })

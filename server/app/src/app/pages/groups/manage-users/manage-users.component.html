@@ -1,12 +1,10 @@
+<app-top-menu></app-top-menu>
+
 <div class="group-container">
     <h2>Manage Group Users for {{ group?.name }}</h2>
     <div *ngIf="errorMessage" class="alert alert-danger">
         {{ errorMessage }}
     </div>
-    <!-- <div *ngIf="group">
-        <p><strong>ID:</strong> {{ group?._id }}</p>
-        <p><strong>Name:</strong> {{ group?.name }}</p>
-    </div> -->
 
     <div *ngIf="users.length > 0; else noUsers">
         <h3>Users - Click to remove</h3>

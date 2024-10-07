@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddGroupComponent } from './add-group.component';
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
 describe('AddGroupComponent', () => {
   let component: AddGroupComponent;
@@ -8,7 +9,7 @@ describe('AddGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddGroupComponent]
+      imports: [AddGroupComponent, TopMenuComponent]
     })
     .compileComponents();
 

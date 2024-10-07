@@ -6,10 +6,12 @@ import { RouterModule } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
 
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
+
 @Component({
   selector: 'app-read-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, TopMenuComponent],
   templateUrl: './read-users.component.html',
   styleUrl: './read-users.component.css'
 })

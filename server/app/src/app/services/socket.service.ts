@@ -48,7 +48,16 @@ export class SocketService {
     });
   }
 
-  // Listen for "message" events from the socket server
+  // Listen for "image" events from the socket server
+  // onImage(): Observable<string> {
+  //   return new Observable<string>(observer => {
+  //     this.socket.on('image', (data: string) => {
+  //       observer.next(data);
+  //     });
+  //   });
+  // }
+
+  // Listen for "usercount" events from the socket server
   onUserCount(): Observable<string> {
     return new Observable<string>(observer => {
       this.socket.on('usercount', (data: string) => {
@@ -57,7 +66,7 @@ export class SocketService {
     });
   }
   
-      // Listen for "message" events from the socket server
+      // Listen for "channelnotice" events from the socket server
   onChannelNotice(): Observable<string> {
     return new Observable<string>(observer => {
       this.socket.on('channelnotice', (data: string) => {

@@ -6,10 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { ChannelService } from '../../../services/channel.service';
 import { SocketService } from '../../../services/socket.service';
 
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
+
 @Component({
   selector: 'app-read-channel',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TopMenuComponent],
   templateUrl: './read-channel.component.html',
   styleUrl: './read-channel.component.css'
 })

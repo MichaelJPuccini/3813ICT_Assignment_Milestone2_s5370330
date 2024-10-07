@@ -6,11 +6,12 @@ import { RouterModule } from '@angular/router';
 import { GroupService } from '../../../services/group.service';
 
 import { DisplayChannelsListComponent } from '../../../components/display-channels-list/display-channels-list.component';
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
 @Component({
   selector: 'app-read-group',
   standalone: true,
-  imports: [CommonModule, RouterModule, DisplayChannelsListComponent],
+  imports: [CommonModule, RouterModule, DisplayChannelsListComponent, TopMenuComponent],
   templateUrl: './read-group.component.html',
   styleUrl: './read-group.component.css'
 })

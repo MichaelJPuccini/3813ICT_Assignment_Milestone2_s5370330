@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 
 import { ChannelAddComponent } from '../../../components/channel-add/channel-add.component'; // Adjust the import path as needed
 
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
+
 @Component({
   selector: 'app-add-channel',
   standalone: true,
-  imports: [CommonModule, FormsModule, ChannelAddComponent],
+  imports: [CommonModule, FormsModule, ChannelAddComponent, TopMenuComponent],
   templateUrl: './add-channel.component.html',
   styleUrl: './add-channel.component.css'
 })

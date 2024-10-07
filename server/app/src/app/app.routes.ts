@@ -10,6 +10,7 @@ import { AddUserComponent } from './pages/users/add-user/add-user.component';
 import { RemoveUserComponent } from './pages/users/remove-user/remove-user.component';
 import { UpdateUserComponent } from './pages/users/update-user/update-user.component';
 import { ReadUsersComponent } from './pages/users/read-users/read-users.component';
+import { ProfileComponent } from './pages/users/profile/profile.component';
 
 import { AddGroupComponent } from './pages/groups/add-group/add-group.component';
 import { RemoveGroupComponent } from './pages/groups/remove-group/remove-group.component';
@@ -32,9 +33,10 @@ export const routes: Routes = [
     {path: 'users/update/:id', component: UpdateUserComponent},
     {path: 'users/remove/:id', component: RemoveUserComponent},
     {path: 'users', component: ReadUsersComponent},
+    {path: 'users/profile', component: ProfileComponent},
 
     {path: 'groups/add', component: AddGroupComponent},
-    {path: 'groups/update/:id', component: UpdateGroupComponent},
+    // {path: 'groups/update/:id', component: UpdateGroupComponent},
     {path: 'groups/remove/:id', component: RemoveGroupComponent},
     {path: 'groups', component: ReadGroupsComponent},
     {path: 'groups/:id', component: ReadGroupComponent},

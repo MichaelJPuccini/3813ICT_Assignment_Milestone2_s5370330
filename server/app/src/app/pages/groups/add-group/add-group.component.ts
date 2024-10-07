@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 
 import { GroupService } from '../../../services/group.service';
 
+import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
+
 
 @Component({
   selector: 'app-add-group',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TopMenuComponent],
   templateUrl: './add-group.component.html',
   styleUrl: './add-group.component.css'
 })
