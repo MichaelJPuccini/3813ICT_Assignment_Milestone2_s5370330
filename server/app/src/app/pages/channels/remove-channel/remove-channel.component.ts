@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Location } from '@angular/common';
 
-import { GroupService } from '../../../services/group.service';
+import { ChannelService } from '../../../services/channel.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
@@ -17,24 +18,26 @@ import { TopMenuComponent } from '../../../components/top-menu/top-menu.componen
 export class RemoveChannelComponent implements OnInit {
 
   channelName: string = '';
-  groupId: string | null = null;
+  channelId: string | null = null;
   errorMessage: string = '';
 
   constructor(
-    private groupService: GroupService,
+    private channelService: ChannelService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
-    this.groupId = this.route.snapshot.paramMap.get('groupId');
+    this.channelId = this.route.snapshot.paramMap.get('id');
   }
 
   confirmDelete(): void {
-    if (this.groupId && this.channelName) {
-      this.groupService.delete(this.channelName).subscribe({
+    if (this.channelId) {
+      this.channelService.delete(this.channelId).subscribe({
         next: () => {
-          this.router.navigate(['/groups', this.groupId]);
+          this.location.back(); // Navigate to the previous page
+          // this.router.navigate(['/groups', this.groupId]);
         },
         error: (error) => {
           console.error('Error deleting channel', error);

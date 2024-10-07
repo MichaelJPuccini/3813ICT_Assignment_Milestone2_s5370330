@@ -1,2 +1,13 @@
 <app-top-menu></app-top-menu>
-<p>remove-channel works!</p>
+<div class="container mt-4">
+    <h2>Confirm Removal of Channel</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+    <!-- <form (ngSubmit)="confirmDelete()">
+        <div class="mb-3">
+            <label for="channelName" class="form-label">Channel Name</label>
+        </div>
+    </form> -->
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Confirm Delete</button>
+</div>

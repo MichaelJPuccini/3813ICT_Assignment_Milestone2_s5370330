@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { TopMenuComponent } from '../../../components/top-menu/top-menu.componen
 @Component({
   selector: 'app-read-channel',
   standalone: true,
-  imports: [CommonModule, FormsModule, TopMenuComponent],
+  imports: [CommonModule, FormsModule, TopMenuComponent, RouterModule],
   templateUrl: './read-channel.component.html',
   styleUrl: './read-channel.component.css'
 })
@@ -32,6 +32,10 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
   rooms=[];
   isInRoom=false;
 
+  isAdmin: boolean = false;
+  isOwner: boolean = false;
+  isSuperUser: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private channelService: ChannelService,
@@ -39,20 +43,21 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    const channelId = this.route.snapshot.paramMap.get('id');
-    this.channelId = channelId || '';
-    console.log('Channel ID:', channelId);
-    if (channelId) {
-      this.channelService.getById(channelId).subscribe({
-        next: (channel) => {
-          this.channel = channel;
-          console.log('Channel fetched', this.channel._id);
-        },
-        error: (error) => {
-          console.error('Error fetching channel', error);
-          this.errorMessage = 'Error fetching channel. Please try again later.';
-        }
-      });
+    await this.getChannelDetails();
+
+    // Check if the user is an admin or SuperAdmin
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.isAdmin = this.channel.adminIds.includes(userId);
+      if (userId === this.channel.creatorId) {
+        this.isOwner = true;
+      }
+    }
+    const userRole = localStorage.getItem('userrole');
+    if (userRole === 'SuperUser') {
+      this.isSuperUser = true;
+      this.isOwner = true; // SuperUser can do what an owner can do
+      this.isAdmin = true; // SuperUser can do what an admin can do
     }
 
     // Make the socket connection
@@ -68,6 +73,19 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
     this.onLeftPage();
   }
   
+  async getChannelDetails() {
+    const channelId = this.route.snapshot.paramMap.get('id');
+
+    if (channelId) {
+      try {
+        const result = await this.channelService.getById(channelId).toPromise();
+        this.channel = result;
+      } catch (error) {
+        console.error('Error fetching channel details', error);
+        this.errorMessage = 'Error fetching channel. Please try again later.';
+      }
+    }
+  }
   
   onLeftPage(): void {
     // Clean up the socket connection

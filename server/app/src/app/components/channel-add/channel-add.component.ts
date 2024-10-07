@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -8,14 +8,14 @@ import { ChannelService } from '../../services/channel.service';
 @Component({
   selector: 'app-channel-add',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './channel-add.component.html',
   styleUrl: './channel-add.component.css'
 })
 export class ChannelAddComponent implements OnInit {
   @Input() groupId: string = '';
   channelName: string = '';
-  creatorId: string = ''; // This should be set to the current user's ID
+  creatorId: string = '';
   errorMessage: string = '';
 
   constructor(
@@ -25,9 +25,9 @@ export class ChannelAddComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.groupId = this.route.snapshot.paramMap.get('groupId') || '';
     // Set the creatorId to the current user's ID
-    this.creatorId = 'currentUserId'; // Replace with actual logic to get current user ID
+    const userId = localStorage.getItem('userId');
+    this.creatorId = userId || "";
   }
 
   add(): void {
