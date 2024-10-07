@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
+import { ToastService } from '../../../services/toast.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
@@ -28,18 +29,20 @@ export class AddUserComponent {
 
   errorText = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private toastService: ToastService, private router: Router) {}
 
   add() {
     this.userService.add(this.user)
       .subscribe(() => {
+        this.toastService.add('User Created', 3000, 'success');
         this.router.navigate(['/users']);
       }, (error) => {
         if (error.status === 413) {
+          this.toastService.add('Image size is too large. Please use a smaller image', 5000, 'error');
           this.errorText = 'Error: Image size was too large. Please upload a smaller image.';
           return; // Stay on page
         } else {
-          console.error('It probably worked, but reported this error. Chrome does this double submitting thing:', error);
+          console.error('Error:', error);
           this.router.navigate(['/users']);
         }
       });

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { GroupService } from '../../../services/group.service';
+import { ToastService } from '../../../services/toast.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
@@ -23,6 +24,7 @@ export class RemoveGroupComponent implements OnInit {
   constructor(
     private groupService: GroupService,
     private router: Router,
+    private toastService: ToastService,
     private route: ActivatedRoute
   ) {}
 
@@ -35,6 +37,7 @@ export class RemoveGroupComponent implements OnInit {
     if (this.groupId) {
       this.groupService.delete(this.groupId).subscribe({
         next: () => {
+          this.toastService.add('Group Deleted', 3000, 'success');
           this.router.navigate(['/groups']);
         },
         error: (error) => {

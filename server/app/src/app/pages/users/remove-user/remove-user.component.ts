@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
+import { ToastService } from '../../../services/toast.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
@@ -22,6 +23,7 @@ export class RemoveUserComponent {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
+    private toastService: ToastService,
     private router: Router
   ) {}
 
@@ -45,11 +47,13 @@ export class RemoveUserComponent {
 
   delete() {
       this.userService.delete(this.user._id).subscribe(() => {
+        this.toastService.add('User Deleted', 3000, 'success');
         this.router.navigate(['/users/']);
     });
   }
 
   cancel(): void {
+    this.toastService.add('Delete Cancelled', 3000, 'success');
     this.router.navigate(['/users']); // Navigate to the users list or another route on cancel
   }
 

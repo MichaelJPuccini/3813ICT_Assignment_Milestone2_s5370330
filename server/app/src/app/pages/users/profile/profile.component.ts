@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
 import { UserService } from '../../../services/user.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +19,7 @@ export class ProfileComponent {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
+    private toastService: ToastService,
     private router: Router
   ) {}
 
@@ -41,9 +43,9 @@ export class ProfileComponent {
 
   delete() {
     this.userService.delete(this.user._id).subscribe(() => {
-      this.router.navigate(['/users/']);
-  });
-}
-
+      this.toastService.add('Your Account has been Deleted', 3000, 'success');
+      this.router.navigate(['/logout/']);
+    });
+  }
 
 }

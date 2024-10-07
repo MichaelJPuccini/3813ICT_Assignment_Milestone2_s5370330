@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+import { ToastService } from '../../services/toast.service';
+
 @Component({
   selector: 'app-top-menu',
   standalone: true,
@@ -21,7 +23,7 @@ export class TopMenuComponent implements OnInit {
 
   isSuperUser: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private toastService: ToastService) { }
 
   ngOnInit(): void {
     // Get the user details from the localStorage
@@ -32,6 +34,7 @@ export class TopMenuComponent implements OnInit {
     
     // Check if we're logged in
     if (this.userId === "") {
+      this.toastService.add('You need to login to access this page', 5000, 'error');
       this.router.navigate(['/login']); // If they're not logged in, Navigate to the /login page
     }
 

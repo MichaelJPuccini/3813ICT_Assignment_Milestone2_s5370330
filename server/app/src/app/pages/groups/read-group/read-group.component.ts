@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
 import { GroupService } from '../../../services/group.service';
+import { ToastService } from '../../../services/toast.service';
 
 import { DisplayChannelsListComponent } from '../../../components/display-channels-list/display-channels-list.component';
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
@@ -23,7 +24,7 @@ export class ReadGroupComponent implements OnInit {
   isAdmin: boolean = false;
   isSuperUser: boolean = false;
 
-  constructor(private route: ActivatedRoute, private groupService: GroupService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private groupService: GroupService, private router: Router, private toastService: ToastService) {}
 
   async ngOnInit(): Promise<void> {
     this.groupId = this.route.snapshot.paramMap.get('id') || '';

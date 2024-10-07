@@ -1,10 +1,11 @@
 import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ChannelService } from '../../../services/channel.service';
 import { SocketService } from '../../../services/socket.service';
+import { ToastService } from '../../../services/toast.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
@@ -38,7 +39,9 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private channelService: ChannelService,
+    private toastService: ToastService,
     private socketService: SocketService
   ) {}
 
@@ -110,11 +113,12 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
     this.ioConnection = await this.socketService.onChannelNotice()
     .subscribe((message:string) => {
       this.channelNotice = message;
+      this.toastService.add(message, 3000, 'success');
     });
 
     console.log("Joining channel: ", this.channelId);
     await this.socketService.joinChannel(this.channelId); // Join the channel on the chat server
-    await this.socketService.send(this.userName + " has joined the channel");
+    // await this.socketService.send(this.userName + " has joined the channel");
   }
 
   chat() {

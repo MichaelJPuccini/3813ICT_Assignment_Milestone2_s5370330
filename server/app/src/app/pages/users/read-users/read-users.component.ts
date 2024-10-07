@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
+import { ToastService } from '../../../services/toast.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
@@ -19,7 +20,7 @@ export class ReadUsersComponent {
 
   users: any[] = []; // Initialize an array to hold users
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private userService: UserService, private toastService: ToastService, private router: Router) {}
 
   ngOnInit() {
     this.load(); // get data initialization

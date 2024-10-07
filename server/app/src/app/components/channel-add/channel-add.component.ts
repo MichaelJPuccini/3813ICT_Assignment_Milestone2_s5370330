@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { ChannelService } from '../../services/channel.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-channel-add',
@@ -19,6 +20,7 @@ export class ChannelAddComponent implements OnInit {
   errorMessage: string = '';
 
   constructor(
+    private toastService: ToastService,
     private route: ActivatedRoute,
     private channelService: ChannelService,
     private router: Router
@@ -43,14 +45,17 @@ export class ChannelAddComponent implements OnInit {
 
       this.channelService.add(newChannel).subscribe({
         next: () => {
+          this.toastService.add('New Group Created', 3000, 'success');
           this.router.navigate(['/groups', this.groupId]); // Navigate to the group page on successful addition
         },
         error: (error) => {
           console.error('Error adding channel', error);
+          this.toastService.add('The channel was not created', 3000, 'error');
           this.errorMessage = 'Error adding channel. Please try again later.';
         }
       });
     } else {
+      this.toastService.add('Channel name is required', 3000, 'error');
       this.errorMessage = 'Channel name is required.';
     }
   }

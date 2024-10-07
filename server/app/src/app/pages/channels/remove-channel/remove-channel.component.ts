@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 
 import { ChannelService } from '../../../services/channel.service';
+import { ToastService } from '../../../services/toast.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
@@ -25,6 +26,7 @@ export class RemoveChannelComponent implements OnInit {
     private channelService: ChannelService,
     private router: Router,
     private route: ActivatedRoute,
+    private toastService: ToastService,
     private location: Location
   ) {}
 
@@ -36,8 +38,9 @@ export class RemoveChannelComponent implements OnInit {
     if (this.channelId) {
       this.channelService.delete(this.channelId).subscribe({
         next: () => {
-          this.location.back(); // Navigate to the previous page
-          // this.router.navigate(['/groups', this.groupId]);
+          this.toastService.add('Channel Deleted', 3000, 'success');
+          // this.location.back(); // Navigate to the previous page
+          this.router.navigate(['/groups']);
         },
         error: (error) => {
           console.error('Error deleting channel', error);

@@ -21,23 +21,19 @@ export class LoginComponent {
   constructor(
     private userService: UserService, 
     private router: Router, 
-    private toastService: ToastService
+    private toastService: ToastService,
   ) {}
 
   login(): void {
     this.userService.login(this.username, this.password)
       .subscribe({
         next: (response) => {
-          // Store user Details
-          // localStorage.setItem('authToken', response.token);
-          // localStorage.setItem('userId', this.userService.currentUser.userId);
-          // localStorage.setItem('username', this.userService.currentUser.username);
-
-          this.toastService.add('Login Successful', 5000, 'success');
+          this.toastService.add('Login Successful', 3000, 'success');
 
           this.router.navigate(['/groups']); // Navigate to a different page on successful login
         },
         error: (error) => {
+          this.toastService.add('Invalid Username or password', 5000, 'error');
           this.errorMessage = 'Invalid username or password';
         }
       });

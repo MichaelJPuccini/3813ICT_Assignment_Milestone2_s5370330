@@ -2,7 +2,7 @@
 
 <div *ngIf="channel; else loading">
     <h2>Channel: {{ channel.name }}</h2>
-    <p>User Count: {{ userCount }}</p>
+    <!-- <p>User Count: {{ userCount }}</p> -->
     <p>Channel Notice: {{ channelNotice }}</p>
 </div>
 
@@ -11,12 +11,12 @@
 </ng-template>
 
 <div *ngIf="isAdmin">
-    <h2>Admin</h2>
+    <!-- <h2>Admin</h2> -->
     <a [routerLink]="['/channels/manageusers', channel?._id]" class="btn btn-primary">Add/Remove Users</a>
 </div>
 
 <div *ngIf="isOwner">
-    <h2>Owner</h2>
+    <!-- <h2>Owner</h2> -->
     <a [routerLink]="['/channels/remove', channel?._id]" class="btn btn-danger">Delete Channel</a>
 </div>
 
