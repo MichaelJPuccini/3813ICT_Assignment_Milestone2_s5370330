@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { UserService } from '../../../services/user.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,11 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService, 
+    private router: Router, 
+    private toastService: ToastService
+  ) {}
 
   login(): void {
     this.userService.login(this.username, this.password)
@@ -27,6 +32,9 @@ export class LoginComponent {
           // localStorage.setItem('authToken', response.token);
           // localStorage.setItem('userId', this.userService.currentUser.userId);
           // localStorage.setItem('username', this.userService.currentUser.username);
+
+          this.toastService.add('Login Successful', 5000, 'success');
+
           this.router.navigate(['/groups']); // Navigate to a different page on successful login
         },
         error: (error) => {

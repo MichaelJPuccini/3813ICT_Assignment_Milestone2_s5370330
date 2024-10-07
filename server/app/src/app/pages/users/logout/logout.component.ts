@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { UserService } from '../../../services/user.service';
+import { ToastService } from '../../../services/toast.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
@@ -17,7 +18,7 @@ import { TopMenuComponent } from '../../../components/top-menu/top-menu.componen
 export class LogoutComponent {
   errorMessage: string = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private toastService: ToastService, private router: Router) {}
 
   ngOnInit(): void {
     this.logout();
@@ -28,6 +29,7 @@ export class LogoutComponent {
     localStorage.removeItem('username'); // Clear the username from local storage
     localStorage.removeItem('userrole'); // Clear the username from local storage
 
+    this.toastService.add('Logout Successful', 5000, 'success');
     this.router.navigate(['/login']); // Navigate to the login page or another appropriate page
   }
 

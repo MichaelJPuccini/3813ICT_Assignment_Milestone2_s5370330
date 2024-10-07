@@ -48,7 +48,7 @@ export class ChannelService {
   // }
 
   getMyChannels(groupId: string, userId: string): Observable<Channel[]> {
-    console.log("Getting channels for user ID:", userId, "in group ID:", groupId);
+    // console.log("Getting channels for user ID:", userId, "in group ID:", groupId);
     return this.http.get<Channel[]>(`${this.apiUrl}/mine/${groupId}/${userId}`);
   }
 

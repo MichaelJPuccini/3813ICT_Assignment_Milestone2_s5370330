@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { DisplayGroupsComponent } from '../../../components/display-groups/display-groups.component'; // Adjust the import path as needed
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
+import { ToastService } from '../../../services/toast.service';
+
 @Component({
   selector: 'app-read-groups',
   standalone: true,
@@ -15,6 +17,12 @@ import { TopMenuComponent } from '../../../components/top-menu/top-menu.componen
 export class ReadGroupsComponent implements OnInit {
 
   isSuperUser: boolean = false;
+
+  constructor(
+    // private userService: UserService, 
+    // private router: Router, 
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     // Is this user a SuperUser?

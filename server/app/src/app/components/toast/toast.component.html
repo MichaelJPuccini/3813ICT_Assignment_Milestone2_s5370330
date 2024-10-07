@@ -1,0 +1,6 @@
+<!-- <button (click)="showToast()">Show Toast</button> -->
+<div class="toast-container">
+    <div *ngFor="let toast of toastService.toasts; let i = index" (click)="removeToast(i)" class="toast" [ngClass]="{'toast-success': toast.type === 'success', 'toast-error': toast.type === 'error'}">
+        {{ toast.message }}
+    </div>
+</div>

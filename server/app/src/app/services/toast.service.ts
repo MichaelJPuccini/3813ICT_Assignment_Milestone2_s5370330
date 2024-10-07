@@ -5,12 +5,14 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ToastService {
+  toasts: { message: string; duration: number; type: 'success' | 'error' }[] = [];
 
-  private toastSubject = new Subject<string>();
-  toastState = this.toastSubject.asObservable();
-
-  show(message: string) {
-    this.toastSubject.next(message);
+  add(message: string, duration: number = 3000, type: 'success' | 'error' = 'success') {
+    this.toasts.push({ message, duration, type });
+    setTimeout(() => this.remove(0), duration);
   }
 
+  remove(index: number) {
+    this.toasts.splice(index, 1);
+  }
 }

@@ -1,0 +1,27 @@
+.toast-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1050; /* Ensure it appears above other elements */
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    background-color: #fff;
+    color: #000;
+}
+
+.toast-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.toast-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
