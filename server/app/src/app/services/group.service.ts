@@ -43,6 +43,7 @@ export class GroupService {
   
   // Delete by ID
   delete(id: string): Observable<any> {
+    console.log("Deleting group: ", id);
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 

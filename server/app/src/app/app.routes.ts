@@ -14,14 +14,12 @@ import { ProfileComponent } from './pages/users/profile/profile.component';
 
 import { AddGroupComponent } from './pages/groups/add-group/add-group.component';
 import { RemoveGroupComponent } from './pages/groups/remove-group/remove-group.component';
-// import { UpdateGroupComponent } from './pages/groups/update-group/update-group.component';
 import { ReadGroupsComponent } from './pages/groups/read-groups/read-groups.component';
 import { ReadGroupComponent } from './pages/groups/read-group/read-group.component';
 import { ManageUsersComponent } from './pages/groups/manage-users/manage-users.component';
 
 import { AddChannelComponent } from './pages/channels/add-channel/add-channel.component';
 import { RemoveChannelComponent } from './pages/channels/remove-channel/remove-channel.component';
-// import { UpdateChannelComponent } from './pages/channels/update-channel/update-channel.component';
 import { ReadChannelComponent } from './pages/channels/read-channel/read-channel.component';
 import { ManageChannelUsersComponent } from './pages/channels/manage-channel-users/manage-channel-users.component';
 

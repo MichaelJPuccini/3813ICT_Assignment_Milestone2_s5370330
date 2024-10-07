@@ -1,2 +1,7 @@
 <app-top-menu></app-top-menu>
 <app-display-groups></app-display-groups>
+
+<div *ngIf="isSuperUser">
+    <!-- Super User Area -->
+    <a [routerLink]="'/groups/add'" class="btn btn-primary">Add New Group</a>
+</div>

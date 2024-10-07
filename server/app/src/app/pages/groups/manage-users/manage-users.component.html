@@ -1,5 +1,6 @@
 <app-top-menu></app-top-menu>
 
+
 <div class="group-container">
     <h2>Manage Group Users for {{ group?.name }}</h2>
     <div *ngIf="errorMessage" class="alert alert-danger">
@@ -10,7 +11,7 @@
         <h3>Users - Click to remove</h3>
         <ul>
             <li *ngFor="let user of users">
-                <button (click)="removeUser(group._id, user.id)">Remove</button>
+                <button (click)="removeUser(group._id, user.id)" class="btn btn-danger">Remove</button>
                 {{ user.name }}
             </li>
         </ul>
@@ -24,7 +25,7 @@
         <h3>Click to add Users</h3>
         <ul>
             <li *ngFor="let nonUser of nonUsers">
-                <button (click)="addUser(group._id, nonUser.id)">Add</button>
+                <button (click)="addUser(group._id, nonUser.id)" class="btn btn-primary">Add</button>
                 {{ nonUser.name }}
             </li>
         </ul>
@@ -38,7 +39,7 @@
         <h3>Admins - Click to remove</h3>
         <ul>
             <li *ngFor="let admin of admins">
-                <button (click)="removeAdmin(group._id, admin.id)">Remove</button>
+                <button (click)="removeAdmin(group._id, admin.id)" class="btn btn-danger">Remove</button>
                 {{ admin.name }}
             </li>
         </ul>
@@ -53,7 +54,7 @@
         <h3>Click to add Admins</h3>
         <ul>
             <li *ngFor="let nonAdmin of nonAdmins">
-                <button (click)="addAdmin(group._id, nonAdmin.id)">Add</button>
+                <button (click)="addAdmin(group._id, nonAdmin.id)" class="btn btn-warning">Add</button>
                 {{ nonAdmin.name }}
             </li>
         </ul>
@@ -62,3 +63,5 @@
         <p>No admins available to add.</p>
     </ng-template>
     </div>
+
+    <a [routerLink]="['/groups', group?._id]" class="btn btn-primary">Return to Group</a>

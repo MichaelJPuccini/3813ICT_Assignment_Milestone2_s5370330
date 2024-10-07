@@ -17,26 +17,52 @@ import { TopMenuComponent } from '../../../components/top-menu/top-menu.componen
 })
 export class ReadGroupComponent implements OnInit {
   groupId: string = '';
-  group: any;
+  group: any = {};
   errorMessage: string = '';
+
+  isAdmin: boolean = false;
+  isSuperUser: boolean = false;
 
   constructor(private route: ActivatedRoute, private groupService: GroupService, private router: Router) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.groupId = this.route.snapshot.paramMap.get('id') || '';
-    if (this.groupId) {
-      this.groupService.getById(this.groupId).subscribe({
-        next: (data) => {
-          this.group = data;
-        },
-        error: (error) => {
-          console.error('Error fetching group', error);
-          this.errorMessage = 'Error fetching group. Please try again later.';
-        }
-      });
-    } else {
-      this.errorMessage = 'Invalid group ID.';
+    try {
+      await this.getGroupDetails();
+      // Check if the user is an admin or SuperAdmin
+      const userId = localStorage.getItem('userId');
+      if (userId) {
+        this.isAdmin = this.group.adminIds.includes(userId);
+      }
+      const userRole = localStorage.getItem('userrole');
+      if (userRole === 'SuperUser') {
+        this.isSuperUser = true;
+        this.isAdmin = true; // SuperAdmin is always an admin
+      }
+      this.errorMessage = '';
+    } catch (error) {
+      console.error('Error fetching group', error);
+      this.errorMessage = 'Error fetching group or Invalid group ID. Please try again later.';
     }
   }
+
+  async getGroupDetails() {
+    console.log("Processing get group details");
+    const groupId = this.route.snapshot.paramMap.get('id')
+    if (groupId) {
+      try {
+        const result = await this.groupService.getById(groupId).toPromise();
+        // const result = await this.groupService.getById(groupId);
+        this.group = result;
+        console.log("Finished Processing get group details: ", this.group);
+      } catch (error) {
+        console.error('Error fetching group details', error);
+        throw error;
+      }
+    } else {
+      throw new Error('Invalid group ID.');
+    }
+  }
+
 
 }

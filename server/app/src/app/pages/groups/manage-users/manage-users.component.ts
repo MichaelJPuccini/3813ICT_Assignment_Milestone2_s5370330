@@ -11,7 +11,7 @@ import { TopMenuComponent } from '../../../components/top-menu/top-menu.componen
 @Component({
   selector: 'app-manage-users',
   standalone: true,
-  imports: [CommonModule, TopMenuComponent],
+  imports: [CommonModule, RouterModule, TopMenuComponent],
   templateUrl: './manage-users.component.html',
   styleUrl: './manage-users.component.css'
 })
@@ -41,7 +41,7 @@ export class ManageUsersComponent implements OnInit {
       // Check if the user is an admin
       const userId = localStorage.getItem('userId');
       if (userId) {
-        this.isAdmin = this.group.admins.includes(userId);
+        this.isAdmin = this.group.adminIds.includes(userId);
       } else {
         this.errorMessage = 'You must be an admin to manage users.';
       }

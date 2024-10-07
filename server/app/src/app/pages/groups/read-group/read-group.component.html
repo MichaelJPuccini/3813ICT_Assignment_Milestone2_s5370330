@@ -1,16 +1,18 @@
 <app-top-menu></app-top-menu>
-<div class="group-container">
-    <h2>Group Details</h2>
-    <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-    </div>
-    <div *ngIf="group">
-        <p><strong>ID:</strong> {{ group?._id }}</p>
-        <p><strong>Name:</strong> {{ group?.name }}</p>
-        <!-- Add more fields as needed -->
-    </div>
+<div *ngIf="group">
+    <h2>{{ group?.name }}</h2>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+</div>
 
-    <app-display-channels-list [groupId]="groupId"></app-display-channels-list>
+<app-display-channels-list [groupId]="groupId"></app-display-channels-list>
 
-    <a [routerLink]="['/channels/add', group?._id]">Add Channel</a>
+<div *ngIf="isAdmin">
+    <a [routerLink]="['/channels/add', group?._id]" class="btn btn-primary">Add Channel</a>
+    <a [routerLink]="['/groups/manageusers', group?._id]" class="btn btn-primary">Add/Remove Users</a>
+</div>
+
+<div *ngIf="isSuperUser">
+    <a [routerLink]="['/groups/remove', group?._id]" class="btn btn-danger">Delete Group</a>
 </div>
