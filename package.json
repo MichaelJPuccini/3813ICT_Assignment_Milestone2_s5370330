@@ -5,7 +5,7 @@
     "mocha": "^10.7.3"
   },
   "scripts": {
-    "test": "mocha ./unitTest/userTests.js",
+    "test": "mocha ./unitTest/groupTests.js",
     "test2": "mocha ./integrationTest/*.js"
   }
 }

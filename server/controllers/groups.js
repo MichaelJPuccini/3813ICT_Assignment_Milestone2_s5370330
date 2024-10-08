@@ -23,26 +23,26 @@ exports.getAll = async (req, res) => {
 };
 
 // Get all items with a filter applied
-exports.getAllByFilter = async (req, res) => {
-    const filter = req.query;
-    try {
-        const items = await model.getAllWithFilter(filter);
-        res.status(200).json(items);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch items with filter" });
-    }
-};
+// exports.getAllByFilter = async (req, res) => {
+//     const filter = req.query;
+//     try {
+//         const items = await model.getAllWithFilter(filter);
+//         res.status(200).json(items);
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to fetch items with filter" });
+//     }
+// };
 
 // Get the last x items
-exports.getLatest = async (req, res) => {
-    const x = parseInt(req.params.x, 10);
-    try {
-        const items = await model.getLatest(x);
-        res.status(200).json(items);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch latest items" });
-    }
-};
+// exports.getLatest = async (req, res) => {
+//     const x = parseInt(req.params.x, 10);
+//     try {
+//         const items = await model.getLatest(x);
+//         res.status(200).json(items);
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to fetch latest items" });
+//     }
+// };
 
 // Create a new item
 // exports.createNewItem = async (req, res) => {
@@ -57,7 +57,7 @@ exports.getLatest = async (req, res) => {
 
 // Create a new item
 exports.createNewItem = async (req, res) => {
-    const item = req.body;
+    let item = req.body;
     // if there is no data in the request body, return an error
     // console.log("New Item: ", item);
     // if item is an empty object, return an error
@@ -65,6 +65,32 @@ exports.createNewItem = async (req, res) => {
         // console.log("No data in the request body");
         return res.status(400).json({ error: "Failed to create item: No data in the request body" });
     }
+    // if the name is missing or empty, return an error
+    if (!item.name || item.name.trim() === "") {
+        // console.log("Missing name");
+        return res.status(400).json({ error: "Failed to create item: Missing name" });
+    }
+
+    // If there is no creatorId, return an error
+    if (!item.creatorId) {
+        return res.status(400).json({ error: "Failed to create item: Missing creatorId" });
+    }
+
+    // If there is no userIds array, add an empty array
+    if (!item.userIds) {
+        item.userIds = [];
+    }
+
+    // If there is no adminIds array, add an empty array
+    if (!item.adminIds) {
+        item.adminIds = [];
+    }
+
+    // If there are no channelIds, add an empty array
+    if (!item.channelIds) {
+        item.channelIds = [];
+    }
+
     try {
         const result = await model.createNewItem(item);
         // console.log('Insert result:', result); // Debugging information
@@ -84,19 +110,25 @@ exports.createNewItem = async (req, res) => {
 };
 
 // Create multiple new items
-exports.createNewItems = async (req, res) => {
-    const items = req.body;
-    try {
-        const result = await model.createNewItems(items);
-        res.status(201).json(result.ops);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to create items" });
-    }
-};
+// exports.createNewItems = async (req, res) => {
+//     const items = req.body;
+//     try {
+//         const result = await model.createNewItems(items);
+//         res.status(201).json(result.ops);
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to create items" });
+//     }
+// };
 
 // Get a single item by ID
 exports.getById = async (req, res) => {
     const id = req.params.id;
+
+    // If the ID is not a valid ObjectId, return an error
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+
     try {
         const item = await model.getById(id);
         if (item) {
@@ -150,6 +182,12 @@ exports.updateById = async (req, res) => {
 exports.getMyGroups = async (req, res) => {
     const userId = req.params.userId;
     // console.log("Getting my groups. User ID: ", userId);
+
+        // If the ID is not a valid ObjectId, return an error
+        if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(404).json({ error: "Invalid ID" });
+        }
+
     try {
         // Load the user
         const user = await userModel.getById(userId);
@@ -180,6 +218,12 @@ exports.addUserToGroup = async (req, res) => {
     console.log("Adding user to group");
     const userId = req.params.userId;
     const groupId = req.params.groupId;
+
+    // If the UserID or GroupID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/) || !groupId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+
     // const { groupId, userId } = req.body;
     console.log("Adding user to group. Group ID: ", groupId, " User ID: ", userId);
 
@@ -215,6 +259,11 @@ exports.removeUserFromGroup = async (req, res) => {
     const groupId = req.params.groupId;
     // const { groupId, userId } = req.body;
 
+    // If the UserID or GroupID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/) || !groupId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+
     try {
         // Load the group
         const group = await model.getById(groupId);
@@ -247,6 +296,11 @@ exports.addAdminToGroup = async (req, res) => {
     const groupId = req.params.groupId;
     // const { groupId, userId } = req.body;
 
+    // If the UserID or GroupID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/) || !groupId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+    
     try {
         // Load the group
         const group = await model.getById(groupId);
@@ -278,6 +332,11 @@ exports.removeAdminFromGroup = async (req, res) => {
     const userId = req.params.userId;
     const groupId = req.params.groupId;
     // const { groupId, userId } = req.body;
+
+    // If the UserID or GroupID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/) || !groupId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
 
     try {
         // Load the group

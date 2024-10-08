@@ -98,9 +98,7 @@ exports.createNewItems = async (req, res) => {
 // Get a single item by ID
 exports.getById = async (req, res) => {
     const id = req.params.id;
-
-    console.log("ID: ", id); // Debugging information
-
+    // console.log("ID: ", id); // Debugging information
     // If the ID is not a valid ObjectId, return an error
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(404).json({ error: "Invalid ID" });
@@ -108,7 +106,7 @@ exports.getById = async (req, res) => {
 
     try {
         const item = await model.getById(id);
-        console.log("User: ", item); // Debugging information
+        // console.log("User: ", item); // Debugging information
         if (item) {
             res.status(200).json(item);
         } else {
@@ -149,7 +147,7 @@ exports.updateById = async (req, res) => {
 
     try {
         const result = await model.updateById(id, updateData);
-        console.log("Result: ", result); // Debugging information
+        // console.log("Result: ", result); // Debugging information
         if (result.matchedCount === 1) {
             res.status(200).json({ message: "Item updated successfully" });
         } else {
