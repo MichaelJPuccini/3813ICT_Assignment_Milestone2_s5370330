@@ -183,10 +183,10 @@ exports.getMyGroups = async (req, res) => {
     const userId = req.params.userId;
     // console.log("Getting my groups. User ID: ", userId);
 
-        // If the ID is not a valid ObjectId, return an error
-        if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-            return res.status(404).json({ error: "Invalid ID" });
-        }
+    // If the ID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
 
     try {
         // Load the user

@@ -13,14 +13,14 @@ const express = require("express");
 const router = express.Router();
 
 // Delete unused routes
-router.get("/", controller.getAll);
-router.get("/filter", controller.getAllByFilter);
-router.get("/latest/:x", controller.getLatest);
+// router.get("/", controller.getAll);
+// router.get("/filter", controller.getAllByFilter);
+// router.get("/latest/:x", controller.getLatest);
 router.post("/", controller.createNewItem);
-router.post("/multiple", controller.createNewItems);
+// router.post("/multiple", controller.createNewItems);
 router.get("/:id", controller.getById);
 router.delete("/:id", controller.deleteById);
-router.patch("/:id", controller.updateById);
+// router.patch("/:id", controller.updateById);
 router.get("/mine/:groupId/:userId", controller.getMyChannels);          // Given the group, get the channels I'm in
 router.get("/adduser/:channelId/:userId", controller.addUser);           // Adds a user to a channel
 router.get("/removeuser/:channelId/:userId", controller.removeUser);     // Removes a user from a channel

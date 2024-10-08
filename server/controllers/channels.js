@@ -64,6 +64,32 @@ exports.createNewItem = async (req, res) => {
         // console.log("No data in the request body");
         return res.status(400).json({ error: "Failed to create item: No data in the request body" });
     }
+    // if the name is missing or empty, return an error
+    if (!item.name || item.name.trim() === "") {
+        // console.log("Missing name");
+        return res.status(400).json({ error: "Failed to create item: Missing name" });
+    }
+
+    // If there is no creatorId, return an error
+    if (!item.creatorId) {
+        return res.status(400).json({ error: "Failed to create item: Missing creatorId" });
+    }
+
+    // If there is no userIds array, add an empty array
+    if (!item.userIds) {
+        item.userIds = [];
+    }
+
+    // If there is no adminIds array, add an empty array
+    if (!item.adminIds) {
+        item.adminIds = [];
+    }
+
+    // If there are no channelIds, add an empty array
+    if (!item.channelIds) {
+        item.channelIds = [];
+    }
+
     try {
         const result = await model.createNewItem(item);
         // console.log('Insert result:', result); // Debugging information
@@ -149,6 +175,17 @@ exports.updateById = async (req, res) => {
 
 exports.getMyChannels = async (req, res) => {
     const { userId, groupId } = req.params;
+
+    // If the ID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+    
+    // If the ID is not a valid ObjectId, return an error
+    if (!groupId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+    
     console.log("Getting My Channels: User ID: ", userId, " Group ID: ", groupId);
     try {
         // Load the user
@@ -179,12 +216,17 @@ exports.getMyChannels = async (req, res) => {
 
 // Add a user to a group
 exports.addUser = async (req, res) => {
-    console.log("Adding user to channel");
+    // console.log("Adding user to channel");
     const userId = req.params.userId;
     const channelId = req.params.channelId;
     // const { groupId, userId } = req.body;
-    console.log("Adding user to channel. channelId: ", channelId, " User ID: ", userId);
+    // console.log("Adding user to channel. channelId: ", channelId, " User ID: ", userId);
 
+    // If the UserID or GroupID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/) || !channelId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+    
     try {
         // Load the group
         const channel = await model.getById(channelId);
@@ -217,6 +259,11 @@ exports.removeUser = async (req, res) => {
     const channelId = req.params.channelId;
     // const { groupId, userId } = req.body;
 
+    // If the UserID or GroupID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/) || !channelId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+    
     try {
         // Load the group
         const channel = await model.getById(channelId);
@@ -249,6 +296,11 @@ exports.addAdmin = async (req, res) => {
     const channelId = req.params.channelId;
     // const { groupId, userId } = req.body;
 
+    // If the UserID or GroupID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/) || !channelId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+
     try {
         // Load the group
         const channel = await model.getById(channelId);
@@ -280,6 +332,11 @@ exports.removeAdmin = async (req, res) => {
     const userId = req.params.userId;
     const channelId = req.params.channelId;
     // const { groupId, userId } = req.body;
+
+    // If the UserID or GroupID is not a valid ObjectId, return an error
+    if (!userId.match(/^[0-9a-fA-F]{24}$/) || !channelId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
 
     try {
         // Load the group
