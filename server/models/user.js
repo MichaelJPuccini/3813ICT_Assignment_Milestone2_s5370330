@@ -108,17 +108,17 @@ exports.updateById = async function updateById(id, updateData) {
 
 // Attempt Login
 exports.attemptLogin = async function attemptLogin(name, password) {
-    console.log("Attempting to login: ", name, password);
+    // console.log("Attempting to login: ", name, password);
     const db = await connectToDatabase();
     const collection = db.collection(TABLE_NAME);
 
     // Find the user with the matching username and password
     const user = await collection.findOne({ name, password });
 
-    console.log("User: ", user);
+    // console.log("User: ", user);
 
     if (user) {
-        console.log("User found: ", user);
+        // console.log("User found: ", user);
         return user;
     } else {
         // Return null or an appropriate response if the login fails

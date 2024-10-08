@@ -14,15 +14,15 @@ const router = express.Router();
 
 // Delete unused routes
 router.get("/", controller.getAll);
-router.get("/filter", controller.getAllByFilter);
-router.get("/latest/:x", controller.getLatest);
+// router.get("/filter", controller.getAllByFilter);
+// router.get("/latest/:x", controller.getLatest);
 router.post("/", controller.createNewItem);
-router.post("/multiple", controller.createNewItems);
+// router.post("/multiple", controller.createNewItems);
 router.get("/:id", controller.getById);
 router.delete("/:id", controller.deleteById);
 router.patch("/:id", controller.updateById);
 router.post("/login", controller.login);
-router.post("/logout", controller.logout);
-router.post("/authtoid", controller.authToId);
+// router.post("/logout", controller.logout);
+// router.post("/authtoid", controller.authToId);
 
 module.exports = router;

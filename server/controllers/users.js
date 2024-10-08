@@ -55,11 +55,16 @@ exports.getLatest = async (req, res) => {
 exports.createNewItem = async (req, res) => {
     const item = req.body;
     // if there is no data in the request body, return an error
-    // console.log("New Item: ", item);
+    // console.log("New User: ", item);
     // if item is an empty object, return an error
     if (!item || Object.keys(item).length === 0) {
         // console.log("No data in the request body");
         return res.status(400).json({ error: "Failed to create item: No data in the request body" });
+    }
+    // If the name or password is missing, return an error
+    if (!item.name || !item.password) {
+        // console.log("Missing name or password");
+        return res.status(400).json({ error: "Failed to create item: Missing name or password" });
     }
     try {
         const result = await model.createNewItem(item);
@@ -93,8 +98,17 @@ exports.createNewItems = async (req, res) => {
 // Get a single item by ID
 exports.getById = async (req, res) => {
     const id = req.params.id;
+
+    console.log("ID: ", id); // Debugging information
+
+    // If the ID is not a valid ObjectId, return an error
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+
     try {
         const item = await model.getById(id);
+        console.log("User: ", item); // Debugging information
         if (item) {
             res.status(200).json(item);
         } else {
@@ -125,12 +139,17 @@ exports.updateById = async (req, res) => {
     const id = req.params.id;
     const updateData = req.body;
 
+    // If the ID is not a valid ObjectId, return an error
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).json({ error: "Invalid ID" });
+    }
+
     // Remove _id from the updateData object - For some reason it won't update if the _id is present
     delete updateData._id;
 
     try {
         const result = await model.updateById(id, updateData);
-        // console.log("Result: ", result); // Debugging information
+        console.log("Result: ", result); // Debugging information
         if (result.matchedCount === 1) {
             res.status(200).json({ message: "Item updated successfully" });
         } else {
@@ -160,7 +179,12 @@ exports.updateById = async (req, res) => {
 // Login using attemptLogin
 exports.login = async (req, res) => {
     const { username, password } = req.body;
-    console.log("Login: ", username, password);
+    // console.log("Login: ", username, password);
+    // if there is no password of name in the request body, return an status 400
+    if (!username || !password) {
+        return res.status(400).json({ error: "Failed to login: Missing username or password" });
+    }
+
     try {
         const user = await model.attemptLogin(username, password);
         if (user) {
