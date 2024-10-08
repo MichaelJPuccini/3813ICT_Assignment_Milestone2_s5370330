@@ -52,3 +52,9 @@
     height: 300px;
     object-fit: cover;
 }
+
+button, .btn {
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

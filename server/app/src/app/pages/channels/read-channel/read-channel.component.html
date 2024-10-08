@@ -10,14 +10,24 @@
     <p>Loading channel data...</p>
 </ng-template>
 
-<div *ngIf="isAdmin">
-    <!-- <h2>Admin</h2> -->
-    <a [routerLink]="['/channels/manageusers', channel?._id]" class="btn btn-primary">Add/Remove Users</a>
-</div>
+<div *ngFor="let m of messages" [ngClass]="{'message-box': true, 'my-message': m.id === userId, 'other-message': m.id !== userId}">
+    <div class="author-info">
+        <div *ngIf="m.authorImage">
+            <img [src]="m.authorImage" alt="image" class="author-image">
+        </div>
+        <div *ngIf="m.authorName">
+            <p class="author-name">{{m.authorName}}</p>
+        </div>
+    </div>
 
-<div *ngIf="isOwner">
-    <!-- <h2>Owner</h2> -->
-    <a [routerLink]="['/channels/remove', channel?._id]" class="btn btn-danger">Delete Channel</a>
+    <div class="message-content">
+        <div *ngIf="m.message">
+            {{m.message}}
+        </div>
+        <div *ngIf="m.image">
+            <img [src]="m.image" alt="image" class="message-image">
+        </div>
+    </div>
 </div>
 
 <div *ngIf="errorMessage" class="alert alert-danger">
@@ -40,63 +50,12 @@
     </form>    
 </div>    
 
-<!-- <div *ngFor="let m of messages" class="message-box"> -->
-<div *ngFor="let m of messages" [ngClass]="{'message-box': true, 'my-message': m.id === userId, 'other-message': m.id !== userId}">
-    <div class="author-info">
-        <div *ngIf="m.authorImage">
-            <img [src]="m.authorImage" alt="image" class="author-image">
-        </div>
-        <div *ngIf="m.authorName">
-            <p class="author-name">{{m.authorName}}</p>
-        </div>
-    </div>
-
-    <div class="message-content">
-        <div *ngIf="m.message">
-            {{m.message}}
-        </div>
-        <div *ngIf="m.image">
-            <img [src]="m.image" alt="image" class="message-image">
-        </div>
-    </div>
+<div *ngIf="isAdmin">
+    <!-- <h2>Admin</h2> -->
+    <a [routerLink]="['/channels/manageusers', channel?._id]" class="btn btn-primary">Add/Remove Users</a>
 </div>
 
-<!-- <div *ngFor="let m of messages">
-    <div>
-        <div *ngIf="m.authorImage">
-            <img [src]="m.authorImage" alt="image" style="width: 100px; height: 100px;">
-        </div>
-        <div *ngIf="m.authorName">
-            <p>{{m.authorName}}</p>
-        </div>
-    </div>
-
-    <div>
-        <div *ngIf="m.message">
-            {{m.message}}
-        </div>
-        <div *ngIf="m.image">
-            <img [src]="m.image" alt="image" style="width: 300px; height: 300px;">
-        </div>
-    </div>
-</div> -->
-
-<!-- <div *ngFor="let m of messages" class="message-box">
-    <div class="author-info">
-        <div *ngIf="m.authorImage">
-            <img [src]="m.authorImage" alt="image" class="author-image">
-        </div>
-        <div *ngIf="m.authorName">
-            <p class="author-name">{{m.authorName}}</p>
-        </div>
-    </div>
-
-    <div class="message-content">
-        <div *ngIf="m.message">
-            {{m.message}}
-        </div>
-        <div *ngIf="m.image">
-            <img [src]="m.image" alt="image" class="message-image">
-        </div>
-    </div>
-</div> -->
+<div *ngIf="isOwner">
+    <!-- <h2>Owner</h2> -->
+    <a [routerLink]="['/channels/remove', channel?._id]" class="btn btn-danger">Delete Channel</a>
+</div>
