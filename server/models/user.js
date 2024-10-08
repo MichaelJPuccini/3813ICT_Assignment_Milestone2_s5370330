@@ -15,7 +15,12 @@ const { ObjectId } = require("mongodb");
 exports.getAll = async function getAll() {
     const db = await connectToDatabase();
     const collection = db.collection(TABLE_NAME);
-    return collection.find({}).toArray();
+
+    // Filter out the password and email fields
+    const projection = { password: 0, email: 0 };
+
+    return collection.find({}, { projection }).toArray();
+    // return collection.find({}).toArray();
 }
 
 // Get all items with a filter applied
@@ -26,14 +31,14 @@ exports.getAllByFilter = async function getAllByFilter(filter) {
 };
 
 // Get the last x items
-exports.getLatest = async function getLatest(x) {
-    const db = await connectToDatabase();
-    const collection = db.collection(TABLE_NAME);
-    return collection.aggregate([
-        { "$sort": { "_id": 1 } },  // Sort by _id in ascending order (insertion order)
-        { "$limit": x }             // Limit the results to the last x items
-    ]).toArray();
-}
+// exports.getLatest = async function getLatest(x) {
+//     const db = await connectToDatabase();
+//     const collection = db.collection(TABLE_NAME);
+//     return collection.aggregate([
+//         { "$sort": { "_id": 1 } },  // Sort by _id in ascending order (insertion order)
+//         { "$limit": x }             // Limit the results to the last x items
+//     ]).toArray();
+// }
 
 // Create a new item
 exports.createNewItem = async function createNewItem(item) {
@@ -43,17 +48,22 @@ exports.createNewItem = async function createNewItem(item) {
 }
 
 // Create multiple new items
-exports.createNewItems = async function createNewItems(items) {
-    const db = await connectToDatabase();
-    const collection = db.collection(TABLE_NAME);
-    return collection.insertMany(items);
-}
+// exports.createNewItems = async function createNewItems(items) {
+//     const db = await connectToDatabase();
+//     const collection = db.collection(TABLE_NAME);
+//     return collection.insertMany(items);
+// }
 
 // Get a single item by ID
 exports.getById = async function getById(id) {
     const db = await connectToDatabase();
     const collection = db.collection(TABLE_NAME);
-    return collection.findOne({ _id: new ObjectId(id) });
+
+    // Filter out the password and email fields
+    const projection = { password: 0, email: 0 };
+
+    return collection.findOne({ _id: new ObjectId(id) }, { projection });
+    // return collection.findOne({ _id: new ObjectId(id) });
 }
 
 // Delete a post by ID
