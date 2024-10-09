@@ -20,38 +20,21 @@ export class AddGroupComponent {
   groupName: string = '';
   errorMessage: string = '';
 
-  group = {
-    // _id: '',
-    name: '',
-    creatorId: '',
-    channelIds: [],
-    adminIds: [],
-    userIds: []
-  }
-
   constructor(private groupService: GroupService, private toastService: ToastService, private router: Router) {}
-
-  // add() {
-  //   this.groupService.add(this.group)
-  //     .subscribe(() => {
-  //       this.router.navigate(['/users']);
-  //     }, (error) => {
-  //       if (error.status === 413) {
-  //         this.errorMessage = 'Error: Image size was too large. Please upload a smaller image.';
-  //         return; // Stay on page
-  //       } else {
-  //         console.error('It probably worked, but reported this error. Chrome does this double submitting thing:', error);
-  //         this.router.navigate(['/users']);
-  //       }
-  //     });
-  // }
 
   addGroup(): void {
     if (this.groupName.trim()) {
 
-      this.group.name = this.groupName;
+      const userId = localStorage.getItem('userId') || "";
+      const newGroup = {
+        name: this.groupName,
+        creatorId: userId,
+        channelIds: [],
+        adminIds: [userId],
+        userIds: [userId]
+      };
 
-      this.groupService.add(this.group).subscribe({
+      this.groupService.add(newGroup).subscribe({
         next: () => {
           this.toastService.add('New Group Created', 3000, 'success');
           this.router.navigate(['/groups']); // Navigate to the groups list page on successful addition
