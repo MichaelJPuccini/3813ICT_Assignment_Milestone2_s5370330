@@ -22,21 +22,3 @@ describe('ReadChannelComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
-
-
-  // beforeEach(async () => {
-  //   await TestBed.configureTestingModule({
-  //     imports: [ReadChannelComponent]
-  //   })
-  //   .compileComponents();
-
-  //   fixture = TestBed.createComponent(ReadChannelComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });

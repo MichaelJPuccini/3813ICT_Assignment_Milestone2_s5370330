@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit, OnDestroy, ViewChild, ElementRef } fro
 import { ActivatedRoute, Router, NavigationStart, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 
 import { ChannelService } from '../../../services/channel.service';

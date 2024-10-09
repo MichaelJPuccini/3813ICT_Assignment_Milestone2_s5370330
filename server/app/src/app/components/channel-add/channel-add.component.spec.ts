@@ -34,4 +34,5 @@ describe('ChannelAddComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

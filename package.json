@@ -2,10 +2,12 @@
   "devDependencies": {
     "chai": "^4.5.0",
     "chai-http": "^4.4.0",
-    "mocha": "^10.7.3"
+    "mocha": "^10.7.3",
+    "nyc": "^17.1.0"
   },
   "scripts": {
     "test": "mocha ./unitTest/*.js",
-    "test2": "mocha ./integrationTest/*.js"
+    "test2": "mocha ./integrationTest/*.js",
+    "coverage": "nyc mocha ./unitTest/*.js"
   }
 }
