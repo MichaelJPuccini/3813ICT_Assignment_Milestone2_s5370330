@@ -4,7 +4,7 @@
         {{ errorMessage }}
     </div>
     <ul *ngIf="groups.length > 0; else noGroups">
-        <li *ngFor="let group of groups">
+        <li *ngFor="let group of groups" class="list-item">
             <!-- {{ group.name }} -->
             <a [routerLink]="['/groups', group._id]">{{ group.name }}</a>
         </li>

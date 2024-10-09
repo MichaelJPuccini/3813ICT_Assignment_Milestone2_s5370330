@@ -4,7 +4,7 @@
         {{ errorMessage }}
     </div>
     <ul *ngIf="channels.length > 0; else noChannels">
-        <li *ngFor="let channel of channels">
+        <li *ngFor="let channel of channels" class="list-item">
             <a [routerLink]="['/channels', channel._id]">{{ channel.name }}</a>
         </li>
     </ul>

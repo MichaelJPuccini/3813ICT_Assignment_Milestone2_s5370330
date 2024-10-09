@@ -1,5 +1,13 @@
 <app-top-menu></app-top-menu>
-<p>Profile Details</p>
+<div class="profile-container">
+    <h2>Username: {{ user?.name }}</h2>
+    <p>Role: {{ user?.role }}</p>
+    <img *ngIf="user?.image" [src]="user.image" alt="User Image" class="profile-image">
 
-<p> TO DO: See profile details. Upload image. Delete own account. </p>
-
+    
+    <div class="image-upload">
+        <input type="file" (change)="onFileChange($event)" class="form-control-file">
+        <button class="btn btn-primary mt-2" (click)="updateImage()">Update Image</button>
+    </div>
+    <button class="btn btn-danger" (click)="delete()">Delete Your Account</button>
+</div>

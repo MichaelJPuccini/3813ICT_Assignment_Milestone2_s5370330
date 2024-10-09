@@ -1,0 +1,14 @@
+@keyframes jiggle {
+    0%, 100% {
+        transform: scale(1.10) rotate(-0.4deg);
+    }
+    50% {
+        transform: scale(1.10) rotate(0.4deg);
+    }
+}
+
+.nav-item:hover {
+    background-color: #d3d3d3; /* Darker grey on hover */
+    border-radius: 15px; /* More rounded corners on hover */
+    animation: jiggle 0.3s infinite;
+}
