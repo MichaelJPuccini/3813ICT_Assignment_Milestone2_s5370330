@@ -8,7 +8,6 @@ import { ToastService } from '../../../services/toast.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
-
 @Component({
   selector: 'app-add-group',
   standalone: true,
@@ -22,6 +21,7 @@ export class AddGroupComponent {
 
   constructor(private groupService: GroupService, private toastService: ToastService, private router: Router) {}
 
+  // When the user clicks the 'Add Group' button
   addGroup(): void {
     if (this.groupName.trim()) {
 
