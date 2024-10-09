@@ -13,7 +13,7 @@ module.exports = {
             if (VERBOSE_CONNETIONS)
                 console.log('User connected on port ' + PORT + ' socket: ' + socket.id);
 
-            socket.on("joinchannel", (channel) => {
+            socket.on("joinchannel", (channel, userName) => {
                 // If the channel doesn't exist, create it and set usercount to 1
                 let channelIndex = channelsName.indexOf(channel);
                 if (channelIndex == -1) {
@@ -39,7 +39,7 @@ module.exports = {
                 if (VERBOSE_CONNETIONS) console.log('User joined channel: ' + channel);
 
                 io.to(channel).emit('usercount', channelUserCount[channelIndex]); // Emit the user count to all users in the room
-                io.to(channel).emit('channelnotice', "User joined channel: ");      // Emit the channel notice to all users in the room (joins, leaves and disconnects)
+                io.to(channel).emit('channelnotice', "User joined channel: " + userName);      // Emit the channel notice to all users in the room (joins, leaves and disconnects)
             }); 
 
             // A message has been sent to the server, so emit it to all users in the channel
@@ -50,7 +50,7 @@ module.exports = {
                 if (VERBOSE_CHAT) console.log("Message emitted: ", message, " Channel: ", channel, " From: ", socket.id);
             });
 
-            socket.on("leavechannel", (channel) => {
+            socket.on("leavechannel", (channel, userName) => {
                 // Remove the user from the channel
                 if (VERBOSE_CONNETIONS) console.log('user left channel: ' + channel);
                 
@@ -65,7 +65,7 @@ module.exports = {
                     channelUserCount[channelIndex] -= 1;
                 }
                 io.to(channel).emit('usercount', channelUserCount[channelIndex]); // Emit the user count to all users in the room
-                io.to(channel).emit('channelnotice', "User left channel: ");
+                io.to(channel).emit('channelnotice', "User left channel: " + userName);
 
                 socket.leave(channel); // Remove the user from the channel - Do this last so they can still receive the message
             });

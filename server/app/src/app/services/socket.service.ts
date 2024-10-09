@@ -17,13 +17,13 @@ export class SocketService {
     return ()=>{this.socket.disconnect();}
   }
 
-  joinChannel(channelId: string) {
-    console.log("Socket service joining channel: ", channelId);
-    this.socket.emit('joinchannel', channelId);
+  joinChannel(channelId: string, userName: string) {
+    // console.log("Socket service joining channel: ", channelId);
+    this.socket.emit('joinchannel', channelId, userName);
   }
 
-  leaveChannel(channelId: string) {
-    this.socket.emit('leavechannel', channelId);
+  leaveChannel(channelId: string, userName: string) {
+    this.socket.emit('leavechannel', channelId, userName);
   }
 
   // Emit a message to the socket server

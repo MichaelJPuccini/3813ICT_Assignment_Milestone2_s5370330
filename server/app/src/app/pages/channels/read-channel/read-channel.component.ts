@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit, OnDestroy, ViewChild, ElementRef } fro
 import { ActivatedRoute, Router, NavigationStart, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 import { ChannelService } from '../../../services/channel.service';
 import { SocketService } from '../../../services/socket.service';
@@ -10,11 +12,6 @@ import { UserService } from '../../../services/user.service';
 
 import { TopMenuComponent } from '../../../components/top-menu/top-menu.component';
 
-interface User {
-  id: string;
-  name: string;
-  image: string;
-}
 interface Message {
   id: string;
   authorName: string;
@@ -30,10 +27,9 @@ interface Message {
   templateUrl: './read-channel.component.html',
   styleUrl: './read-channel.component.css'
 })
-export class ReadChannelComponent implements OnInit, OnDestroy {
+export class ReadChannelComponent implements OnInit {
   private socket: any;
   messagecontent: string = "";
-  // messages: string[] = [];
   messages: Message[] = [];
   ioConnection:any;
   imagecontent: string = "";
@@ -66,17 +62,47 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
     private channelService: ChannelService,
     private toastService: ToastService,
     private userService: UserService,
+    private location: Location,
     private socketService: SocketService
-  ) {}
+  ) {
+  }
 
-  async ngOnInit(): Promise<void> {
-    // console.log("Getting Details");
+  // Called when the user opens the page
+  async enteringRoom() {
     await this.getChannelDetails();
-    // console.log("Getting Users");
+    console.log("Joining channel: ", this.channelId);
+
     const users = await this.userService.getAll().toPromise();
     this.users = users || [];
     console.log("Users: ", users);
 
+    await this.setupUserPermissions();
+
+    // Make the socket connection
+    this.initIoConnection();
+  }
+
+  // Called when the user clicks on leave channel
+  async leavingRoom() {
+    // console.log("Leaving channel: ", this.channelId);
+    if (this.ioConnection) {
+      // Send a leave channel message
+      this.socketService.leaveChannel(this.channelId, this.userName);
+    }
+
+    // Unsubscribe from the socket connection
+    if (this.ioConnection) {
+      this.ioConnection.unsubscribe();
+      this.ioConnection = null;
+    }
+
+    // Route user to the previous page
+    console.log("Going back to previous page");
+    this.location.back();
+  }
+  
+  // Sets up the user permissions
+  async setupUserPermissions() {
     // Check if the user is an admin or SuperAdmin
     const userId = localStorage.getItem('userId');
     this.userId = userId || '';
@@ -93,22 +119,19 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
       this.isOwner = true; // SuperUser can do what an owner can do
       this.isAdmin = true; // SuperUser can do what an admin can do
     }
+  }
 
-    // Make the socket connection
-    this.initIoConnection();
+  // called when the user opens the page
+  async ngOnInit(): Promise<void> {
+    console.log("ngOnInit triggered");
+
+    await this.enteringRoom();
   }
   
-  ngOnDestroy(): void {
-    // this.onLeftPage(); // This is causing an issue with testing
-  }
-  
-  @HostListener('window:beforeunload', ['$event'])
-  onBeforeUnload(event: Event): void {
-    this.onLeftPage();
-  }
-  
+  // Loads the channel details
   async getChannelDetails() {
     const channelId = this.route.snapshot.paramMap.get('id');
+    this.channelId = channelId || '';
 
     if (channelId) {
       try {
@@ -119,12 +142,6 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
         this.errorMessage = 'Error fetching channel. Please try again later.';
       }
     }
-  }
-  
-  onLeftPage(): void {
-    // Clean up the socket connection
-    this.socketService.send(this.userName + " has left the channel");
-    // this.socketService.disconnect();
   }
   
   // Make the socket connection
@@ -139,17 +156,11 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
 
       // get user from user list
       const user = this.users.find((user: any) => user._id == parsedMessage.id);
-      // console.log("User: ", user);
       // Add the author name & image to the message
       parsedMessage.authorImage = user.image || '';
       parsedMessage.authorName = user.name || '';
-
-      // parsedMessage.authorImage = ""; //this.channel.users.find((user: any) => user.id === parsedMessage.id)?.image || '';
-      // parsedMessage.authorName = ""; //this.channel.users.find((user: any) => user.id === parsedMessage.id)?.name || '';
-
-      console.log("Received message: ", parsedMessage);
+      // console.log("Received message: ", parsedMessage);
       // add new message to the messages array
-      // this.messages.push(message);
       this.messages.push(parsedMessage);
     });
 
@@ -164,9 +175,8 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
       this.toastService.add(message, 3000, 'success');
     });
 
-    console.log("Joining channel: ", this.channelId);
-    await this.socketService.joinChannel(this.channelId); // Join the channel on the chat server
-    // await this.socketService.send(this.userName + " has joined the channel");
+    // console.log("Joining channel: ", this.channelId);
+    await this.socketService.joinChannel(this.channelId, this.userName); // Join the channel on the chat server
   }
 
   // Send a message to the chat server
@@ -190,6 +200,7 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Called when the user selects a file
   onFileChange(event: any): void {
     const file = event.target.files[0];
     if (file) {

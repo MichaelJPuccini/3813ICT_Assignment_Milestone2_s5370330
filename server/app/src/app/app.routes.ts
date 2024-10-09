@@ -24,6 +24,7 @@ import { ReadChannelComponent } from './pages/channels/read-channel/read-channel
 import { ManageChannelUsersComponent } from './pages/channels/manage-channel-users/manage-channel-users.component';
 
 export const routes: Routes = [
+    {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
     {path: 'logout', component: LogoutComponent},
     {path: 'users/add', component: AddUserComponent},
@@ -32,7 +33,6 @@ export const routes: Routes = [
     {path: 'users', component: ReadUsersComponent},
     {path: 'users/profile', component: ProfileComponent},
     
-    {path: '', component: ReadGroupsComponent},
     {path: 'groups/add', component: AddGroupComponent},
     // {path: 'groups/update/:id', component: UpdateGroupComponent},
     {path: 'groups/remove/:id', component: RemoveGroupComponent},

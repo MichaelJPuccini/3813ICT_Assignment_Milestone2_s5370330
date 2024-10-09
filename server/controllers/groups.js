@@ -22,39 +22,6 @@ exports.getAll = async (req, res) => {
     }
 };
 
-// Get all items with a filter applied
-// exports.getAllByFilter = async (req, res) => {
-//     const filter = req.query;
-//     try {
-//         const items = await model.getAllWithFilter(filter);
-//         res.status(200).json(items);
-//     } catch (error) {
-//         res.status(500).json({ error: "Failed to fetch items with filter" });
-//     }
-// };
-
-// Get the last x items
-// exports.getLatest = async (req, res) => {
-//     const x = parseInt(req.params.x, 10);
-//     try {
-//         const items = await model.getLatest(x);
-//         res.status(200).json(items);
-//     } catch (error) {
-//         res.status(500).json({ error: "Failed to fetch latest items" });
-//     }
-// };
-
-// Create a new item
-// exports.createNewItem = async (req, res) => {
-//     const item = req.body;
-//     try {
-//         const result = await model.createNewItem(item);
-//         res.status(201).json(result.ops[0]);
-//     } catch (error) {
-//         res.status(500).json({ error: "Failed to create item" });
-//     }
-// };
-
 // Create a new item
 exports.createNewItem = async (req, res) => {
     let item = req.body;
