@@ -29,7 +29,13 @@ export class ManageUsersComponent implements OnInit {
   admins: any[] = [];
   nonAdmins: any[] = [];
 
-  constructor(private route: ActivatedRoute, private groupService: GroupService, private userService: UserService, private toastService: ToastService, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private groupService: GroupService, 
+    private userService: UserService, 
+    private toastService: ToastService, 
+    // private router: Router
+  ) {}
 
   async ngOnInit(): Promise<void> {
     try {
@@ -47,10 +53,9 @@ export class ManageUsersComponent implements OnInit {
         this.errorMessage = 'You must be an admin to manage users.';
       }
     } catch (error) {
-      console.error('Error initializing component', error);
+      // console.error('Error initializing component', error);
       this.errorMessage = 'Error initializing component. Please try again later.';
     } 
-
   }
   
   async getGroupDetails() {

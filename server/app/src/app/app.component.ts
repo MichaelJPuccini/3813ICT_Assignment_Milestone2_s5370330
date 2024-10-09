@@ -11,5 +11,5 @@ import { ToastComponent } from './components/toast/toast.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'ChatApp';
 }

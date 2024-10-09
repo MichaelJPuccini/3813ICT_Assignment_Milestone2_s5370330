@@ -25,7 +25,11 @@ export class AddChannelComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get('groupId') || '';
-    // Set the creatorId to the current user's ID
+
+    this.route.params.subscribe(params => {
+      const id = params['groupId'];
+      this.groupId = id;
+    });
   }
 
 }

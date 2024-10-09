@@ -26,6 +26,11 @@ export class ProfileComponent {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id'); // Get the id from Parameters
 
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      // console.log(id); // Use the id as needed
+    });
+
     if (id) {
       this.load(id); // Load if id is valid
     } else {

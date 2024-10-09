@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { DisplayGroupsComponent } from './display-groups.component';
 
@@ -8,7 +9,7 @@ describe('DisplayGroupsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DisplayGroupsComponent]
+      imports: [DisplayGroupsComponent, HttpClientModule],
     })
     .compileComponents();
 

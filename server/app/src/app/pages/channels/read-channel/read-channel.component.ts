@@ -99,7 +99,7 @@ export class ReadChannelComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    this.onLeftPage();
+    // this.onLeftPage(); // This is causing an issue with testing
   }
   
   @HostListener('window:beforeunload', ['$event'])

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RemoveGroupComponent } from './remove-group.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RemoveGroupComponent', () => {
   let component: RemoveGroupComponent;
@@ -8,9 +9,8 @@ describe('RemoveGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RemoveGroupComponent]
-    })
-    .compileComponents();
+      imports: [HttpClientModule, RouterTestingModule]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RemoveGroupComponent);
     component = fixture.componentInstance;
@@ -21,3 +21,4 @@ describe('RemoveGroupComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

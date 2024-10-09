@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { DisplayChannelsListComponent } from './display-channels-list.component';
 
@@ -8,7 +9,7 @@ describe('DisplayChannelsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DisplayChannelsListComponent]
+      imports: [DisplayChannelsListComponent, HttpClientModule],
     })
     .compileComponents();
 
